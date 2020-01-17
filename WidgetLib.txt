@@ -1,0 +1,4243 @@
+
+--# Main
+-- WidgetLib
+
+
+-- Use this function to perform your initial setup
+function setup()
+    displayMode(STANDARD)
+    print("Hello WidgetLib!")
+    
+    --[[
+    local sqrt3=math.sqrt(3)
+    print(sqrt3)
+    ]]
+    
+    oldClose = close -- Make a function that does the same thing as the originl close function
+    close = function() -- Must be afte rsetting oldClose (not as a usual function declaration), otherwise oldClose won't work
+        print("I'm not closing! You can put code here")
+        onClose()
+        -- oldClose() -- Uncomment this when you want the program to close after the action.
+    end
+    --[[
+    function onClose()
+    alert("You ca do something before we close")
+    oldClose()
+end
+    ]]
+    testDelayButton = Button("Test Delay")
+    testDelayButton.action = function() testDelay() end
+    
+    testLoHiPairButton = Button("Test LoHiPair")
+    testLoHiPairButton.action = function() testLoHiPair() end
+    
+    testingTween = false
+    testTweenButton = Button("Test Tween")
+    testTweenButton.action = function() testTween() end
+    
+    testingAdvance = false
+    testAdvanceButton = Button("Test Advance")
+    testAdvanceButton.action = function() testAdvance() end
+    
+    testPrintFmtButton = Button("Test PrintFmt")
+    testPrintFmtButton.action = function() testPrintFmt() end
+    
+    testingImageText= false
+    testImageTextButton = Button("Test ImageText")
+    testImageTextButton.action = function() testImageText() end
+    
+    testingScrollText = false
+    testScrollTextButton = Button("Test ScrollText")
+    testScrollTextButton.action = function() testScrollText() end
+    
+    testingMessagePanel = false
+    testMessagePanelButton = Button("Test MessagePanel")
+    testMessagePanelButton.action = function() testMessagePanel() end
+    
+    testingFloatingMessagePanel = false
+    testFloatingMessagePanelButton = Button("Test Floating MessagePanel")
+    testFloatingMessagePanelButton.action = function() testFloatingMessagePanel() end
+    
+    testMeshButtonButton = Button("Test MeshButton")
+    testMeshButtonButton.action = function() testMeshButton() end
+    
+    testSwitchToggleControlButton = Button("Test SwitchToggleControl")
+    testSwitchToggleControlButton.action = function() testSwitchToggleControl() end
+    
+    testMeshCircleButton = Button("Test MeshCircle")
+    testMeshCircleButton.action = function() testMeshCircle() end
+    
+    testTextReaderButton = Button("Test TextReader")
+    testTextReaderButton.action = function() testTextReader() end
+    
+    exitButton = Button("Exit")
+    exitButton.action = function() close() end
+    
+    testHexagonButton = Button("Test Hexagon")
+    testHexagonButton.action = function() testHexagon() end
+    
+    testSelectDialogButton = Button("Test SelectDialog")
+    testSelectDialogButton.action = function() testSelectDialog() end
+    
+    testSaveCancelDialogButton = Button("Test SaveCancelDialog")
+    testSaveCancelDialogButton.action = function() testSaveCancelDialog() end
+    
+    -- list of items
+    testLoadDeleteDialogButton = Button("Test LoadDeleteDialog")
+    testLoadDeleteDialogButton.action = function() testLoadDeleteDialog() end
+    -- single item
+    testLoadDeleteMPButton = Button("Test LoadDeleteMP")
+    testLoadDeleteMPButton.action = function() testLoadDeleteMP() end
+    
+end
+
+
+function onClose()
+    alert("You can do something before we close")
+    oldClose()
+end
+
+-- This function gets called once every frame
+floaterCount=0
+function draw()
+    -- This sets a dark background color
+    -- background(40, 40, 50)
+    if testingLoadDeleteMP then
+        drawLoadDeleteMP()
+        return
+    end
+    if testingLoadDeleteDialog then
+        drawLoadDeleteDialog()
+        return
+    end
+    if testingSaveCancelDialog then
+        drawSaveCancelDialog()
+        return
+    end
+    
+    if testingSelectDialog then
+        drawSelectDialog()
+        return
+    end
+    if testingTextReader then
+        drawTextReader()
+        return
+    end
+    if testingFloatingMessagePanel then
+        drawFloatingMessagePanel()
+        testFloatingMessagePanel=false
+        return
+    end
+    if testingSwitchToggleControl then
+        drawSwitchToggleControl()
+        return
+    end
+    if testingMeshButton then
+        drawMeshButton()
+        return
+    end
+    if testingHexagon then
+        drawHexagon()
+        return
+    end
+    if testingMeshCircle then
+        drawMeshCircle()
+        return
+    end
+    if testingTween then
+        drawTween()
+        return
+    end
+    if testingAdvance then
+        drawAdvance()
+        return
+    end
+    if testingImageText then
+        drawImageText()
+        return
+    end
+    if testingScrollText then
+        font("CourierNewPSMT")
+        drawScrollText()
+        return
+    end
+    if testingMessagePanel then
+        drawMessagePanel()
+        return
+    end
+    -- This sets the line thickness
+    strokeWidth(5)
+    x= WIDTH/2 - 150
+    y=HEIGHT/2 + 350
+    
+    
+    y = y - 50
+    testLoHiPairButton.pos = vec2(x,y)
+    testLoHiPairButton:draw()
+    
+    y = y - 50
+    testTweenButton:draw()
+    testTweenButton.pos = vec2(x,y)
+    if testingTween then
+        testingTween = false
+        drawTween()
+    end
+    
+    y = y - 50
+    testAdvanceButton:draw()
+    testAdvanceButton.pos = vec2(x,y)
+    
+    
+    y = y - 50
+    
+    testPrintFmtButton.pos = vec2(x,y)
+    testPrintFmtButton:draw()
+    
+    y = y - 50
+    
+    testImageTextButton.pos = vec2(x,y)
+    testImageTextButton:draw()
+    
+    y = y - 50
+    testScrollTextButton.pos = vec2(x,y)
+    testScrollTextButton:draw()
+    
+    y = y - 50
+    testMessagePanelButton.pos = vec2(x,y)
+    testMessagePanelButton:draw()
+    
+    y = y - 50
+    testFloatingMessagePanelButton.pos = vec2(x,y)
+    testFloatingMessagePanelButton:draw()
+    y = y - 50
+    testMeshButtonButton.pos = vec2(x,y)
+    testMeshButtonButton:draw()
+    
+    y = y - 50
+    testSwitchToggleControlButton.pos = vec2(x,y)
+    testSwitchToggleControlButton:draw()
+    
+    y = y - 50
+    testMeshCircleButton.pos = vec2(x,y)
+    testMeshCircleButton:draw()
+    
+    y = y - 50
+    testTextReaderButton.pos = vec2(x,y)
+    testTextReaderButton:draw()
+    
+    y = y - 50
+    exitButton.pos = vec2(x,y)
+    exitButton:draw()
+    
+    -- reset for 2nd colun
+    x= WIDTH/2 + 150
+    y=HEIGHT/2 + 300
+    
+    testHexagonButton.pos = vec2(x,y)
+    testHexagonButton:draw()
+    
+    y = y - 50
+    testSelectDialogButton.pos = vec2(x,y)
+    testSelectDialogButton:draw()
+    
+    y = y - 50
+    testSaveCancelDialogButton.pos = vec2(x,y)
+    testSaveCancelDialogButton:draw()
+    
+    y = y - 50
+    testLoadDeleteDialogButton.pos = vec2(x,y)
+    testLoadDeleteDialogButton:draw()
+    
+    y = y - 50
+    testLoadDeleteMPButton.pos = vec2(x,y)
+    testLoadDeleteMPButton:draw()
+    
+end
+
+function touched(touch)
+    if testingLoadDeleteMP then
+        if loadDeleteMP1.active then
+            loadDeleteMP1:touched(touch)
+            return
+        end
+    end
+    if testingLoadDeleteDialog then
+        if loadDeleteDialog1.active then
+            loadDeleteDialog1:touched(touch)
+            -- loadDeleteDialog1.msgPanel:touched(touch)
+            return
+        end
+    end
+    if testingSaveCancelDialog then
+        if saveCancelDialog1.active then
+            saveCancelDialog1:touched(touch)
+            return
+        end
+    end
+    if testingSelectDialog then
+        if selectDialog1.active then
+            selectDialog1:touched(touch)
+            return
+        end
+        if selectDialog2.active then
+            selectDialog2:touched(touch)
+            return
+        end
+        if selectDialog3.active then
+            selectDialog3:touched(touch)
+            return
+        end
+        selectDialogTouched(touch)     
+    end
+    
+    if testingScrollText then
+        scrollText1:touched(touch)
+        pgupButton:touched(touch)
+        pgdnButton:touched(touch)
+        
+        topButton:touched(touch)
+        
+        endButton:touched(touch)
+        
+        return
+    end
+    if testingMessagePanel then
+        messagePanel1:touched(touch)
+        
+        testingMessagePanel=false
+        return
+    end
+    if testingTextReader then
+        reader1:touched(touch)
+        return
+    end
+    if testingMeshButton then
+        meshButton1:touched(touch)
+        meshButton2:touched(touch)
+        -- testingMeshButton=false
+        return
+    end
+    if testingImageText then
+        imageTextButton1:touched(touch)
+        imageTextButton2:touched(touch)
+        -- testingMeshButton=false
+        return
+    end
+    if testingSwitchToggleControl then
+        testSTC1:touched(touch)
+        return
+        
+    end
+    
+    testDelayButton:touched(touch)
+    testLoHiPairButton:touched(touch)
+    testTweenButton:touched(touch)
+    testPrintFmtButton:touched(touch)
+    testAdvanceButton:touched(touch)
+    testImageTextButton:touched(touch)
+    testScrollTextButton:touched(touch)
+    testMessagePanelButton:touched(touch)
+    testFloatingMessagePanelButton:touched(touch)
+    testMeshButtonButton:touched(touch)
+    testSwitchToggleControlButton:touched(touch)
+    testMeshCircleButton:touched(touch)
+    testTextReaderButton:touched(touch)
+    exitButton:touched(touch)
+    testHexagonButton:touched(touch)
+    testSelectDialogButton:touched(touch)
+    testSaveCancelDialogButton:touched(touch)
+    testLoadDeleteDialogButton:touched(touch)
+    testLoadDeleteMPButton:touched(touch)
+end
+
+function testLoadDeleteMP()
+    local msg="Load or delete item:"
+    local itemName = "TheItem"
+    loadDeleteMP1 = LoadDeleteMP(msg,itemName)
+    loadDeleteMP1.loadAction=function ()alert("Load Action") end
+    loadDeleteMP1.deleteAction=function( ) alert("Delete Action") end
+    loadDeleteMP1.active=true
+    testingLoadDeleteMP=true
+end
+
+function drawLoadDeleteMP()
+    background(lightestslateblueColor)
+    
+    loadDeleteMP1:draw()  
+end
+
+
+function testLoadDeleteDialog()
+    local itemTable = {
+    Button("Item One"),
+        Button("Item Two"),
+        Button("Item Three"),
+    }
+    
+    --[[
+    local msg="Load or delete item:"
+    local itemName = "TheItem"
+    loadDeleteMP = LoadDeleteMP(msg,itemName)
+    loadDeleteMP.loadAction=function ()alert("Load Action") end
+    loadDeleteMP.deleteAction=function( ) alert("Delete Action") end
+    loadDeleteMP.active=false
+      ]]
+    
+    loadDeleteDialog1 = LoadDeleteDialog(itemTable)
+    loadDeleteDialog1.loadDeleteMsg="Load or delete item:"
+    loadDeleteDialog1.loadAction=function ()alert("Load Action - "..loadDeleteDialog1.selectedItem) end
+    loadDeleteDialog1.deleteAction=function( ) alert("Delete Action") end
+    loadDeleteDialog1.active=true
+    
+    testingLoadDeleteDialog=true
+end
+
+
+
+
+
+function drawLoadDeleteDialog()
+    background(lightestslateblueColor)
+    loadDeleteDialog1:draw()  
+
+end
+
+function testSaveCancelDialog()
+    print("testSaveCancelDialog")
+    saveCancelDialog1=SaveCancelDialog("saveMe","Save your thang:","myext")
+    saveCancelDialog1.active=true
+    saveCancelDialog1.action=function() alert("saveCancelDialog action has been invoked!") end
+    testingSaveCancelDialog=true
+end
+
+function drawSaveCancelDialog()
+    background(lightestslateblueColor)
+    saveCancelDialog1:draw()  
+end
+
+function testSelectDialog()
+    diamTable= {
+    "11 Points",
+    "15 Points",
+    "19 Points"
+    }
+        local txt=diamTable[3]
+    selectDialog1= SelectDialog(diamTable, txt)
+    selectDialog1.action = function(selected) setBoardDiameter(selected) end
+    selectDialog1.minWidth=80
+
+    diamSettingButton=Button(txt)
+
+    diamSettingButton.action = function() resetSelectDialog(1) end
+    
+    handicapTable={
+    "None",
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+    }
+        local txt=handicapTable[1]
+    selectDialog2= SelectDialog(handicapTable,txt)
+    selectDialog2.action = function(selected) setHandicap(selected) end
+
+    handicapSettingButton=Button(txt)
+    selectDialog2.minWidth=50
+    handicapSettingButton.action = function() resetSelectDialog(2) end
+    handicapSettingButton.minWidth=80
+    
+    playerModeTable ={
+    1,
+    2,
+    3,
+    4,
+    5
+    }
+    playerModeDisplayTable= {
+    "Player vs White AI",
+    "Player vs Black AI",
+    "Black AI vs White AI",
+    "Player vs Player",
+    "Manual Play Mode"
+    }
+    
+    local txt=playerModeTable[1]
+    print("selected txt b4 costructor:")
+    print(txt)
+    selectDialog3= SelectDialog(playerModeTable, txt, playerModeDisplayTable)
+    selectDialog3.action = function(selected) setPlayerMode(selected) end
+
+    playerModeSettingButton=Button(playerModeDisplayTable[txt])
+    selectDialog3.minWidth=150
+    playerModeSettingButton.action = function() resetSelectDialog(3) end
+    playerModeSettingButton.minWidth=150
+    
+    
+    testingSelectDialog=true
+end
+
+function setBoardDiameter(diamString)
+    diamSettingButton.displayName=diamString
+end
+
+function setHandicap(handiStr)
+    handicapSettingButton.displayName=handiStr
+end
+
+function setPlayerMode(modeKey)
+    local modeDisplay=playerModeDisplayTable[modeKey]
+    playerModeSettingButton.displayName=modeDisplay
+end
+
+
+
+function resetSelectDialog(test)
+    testSelectDialog()
+    if test == 1 then
+        selectDialog1.active=true
+    elseif test == 2 then
+        selectDialog2.active=true
+    else
+        selectDialog3.active=true
+    end
+end
+
+function drawSelectDialog()
+    background(lightestslateblueColor)
+    local x=WIDTH/2
+    local y=HEIGHT/2
+    y = y + 100
+    fill(blackColor)
+    text("Board Diameter:", x-175, y)
+    diamSettingButton.pos=vec2(x,y)
+    diamSettingButton:draw()
+    selectDialog1.y=y
+    selectDialog1:draw()
+    
+    y = y - 100
+    x = x - 25
+    fill(blackColor)
+    text("Handicap:", x-125, y)
+    handicapSettingButton.pos=vec2(x,y)
+    handicapSettingButton:draw()
+    selectDialog2.y=y
+    selectDialog2.x=x
+    selectDialog2:draw()
+    
+    y = y - 100
+    x = x + 50
+    fill(blackColor)
+    text("Player Mode:", x-200, y)
+    playerModeSettingButton.pos=vec2(x,y)
+    playerModeSettingButton:draw()
+    selectDialog3.y=y
+    selectDialog3.x=x
+    selectDialog3:draw()
+    
+end
+
+function selectDialogTouched(touch)
+    diamSettingButton:touched(touch)
+    selectDialog1:touched(touch)
+        handicapSettingButton:touched(touch)
+    selectDialog2:touched(touch)
+    playerModeSettingButton:touched(touch)
+    selectDialog3:touched(touch)
+    
+
+end
+
+function testTextReader()
+    print("testTextReader")
+    t=createRandomTextTable(200,160)
+        --[[
+    (t)
+
+    for i=1,#t do
+    print(t[i])
+end
+    ]]
+    
+    reader1=TextReader(t)
+    if true then
+        if true then
+            -- default settings
+        else
+            reader1.centeredText=true
+        end
+    else
+        reader1.hasBorder=false
+        reader1.hasButtons=false
+        reader1.hasEnclosingPanel=false
+    end
+    testingTextReader=true
+end
+
+ALPHA="abcdefghijklmnopwrstuvwxyzeeueeeeerrrrrrtttttttaaaaaaaaatheniiiiiiiuuuooooophnmccdssssss"
+SEPARATERS=".    .,  ;              .,    "
+WORDLENTH="233444555667789"
+function createRandomTextTable(lines,lineLength)
+    local s=""
+    local l=""
+    local t={}
+    math.randomseed(os.time())
+    --[[
+    if #l >lineLength -4 then
+    -- print(l)
+    table.insert(t,l)
+    l=""
+end
+    ]]
+    local len =0
+    sanity=0
+    for i=1,lines do
+        print(i)
+        while true do
+            sanity = sanity + 1
+            -- print(sanity)
+            if sanity>10000 then
+                goto alldone
+            end
+            local pos = math.random(#WORDLENTH)
+            local wlen = string.sub(WORDLENTH,pos,pos)
+            -- print (wlen)
+            for i=1,wlen do
+                pos = math.random(#ALPHA)
+                s=s..string.sub(ALPHA,pos,pos)
+            end
+            -- print(s)
+            l=l..s
+            s=""
+            pos = math.random(#SEPARATERS)
+            local sep=string.sub(SEPARATERS,pos,pos)
+            l=l..sep
+            if sep ~= " "then
+                l=l.." "
+            end
+            len=len +#l
+            if len >lineLength-4 then
+                table.insert(t,l)
+                l=""
+                len=0
+                goto zbreak
+            end
+            
+        end
+        ::zbreak::
+    end
+    ::alldone::
+    --[[
+    for i=1,#t do
+    print(t[i])
+end
+    ]]
+    return t
+end
+
+function testSwitchToggleControl()
+    local x = WIDTH/2
+    local y= HEIGHT/2
+    testSTC1=SwitchToggleControl(x,500,false)
+    testSTC1.onChange = function(switchOn) switchChanged(switchOn) end
+    testingSwitchToggleControl = true
+end
+
+function drawSwitchToggleControl()
+    background(40, 40, 50)
+    testSTC1:draw()
+    testingTextReader=true
+end
+
+function switchChanged(switchOn)
+    if switchOn then
+        alert("You flipped the switch ON!")
+    else
+        alert("You flipped the switch OFF!")
+    end
+end
+
+function testHexagon()
+    local x = 300
+    local y= 50
+    local len = 300-- length of one side of the eqilateral hexagon created
+    local c=wheatColor
+    
+    hex1=Hexagon(x,y, len, c)
+    testingHexagon= true
+end
+
+function testMeshCircle()
+    local x = WIDTH/2
+    local y= HEIGHT/2
+    local diam = 44
+    meshCircle1=MeshCircle(x,y, diam)
+    y = y + 48
+    whStone1=WhiteStone(x,y, diam )
+    y = y + 48
+    blkStone1=BlackStone(x,y, diam)
+    y = y + 48
+    blueBead1=BlueBead(x,y, diam - 4)
+    y = y + 48
+    yellowBead1=YellowBead(x,y, diam - 4)
+    
+    testingMeshCircle = true
+    
+end
+
+function drawHexagon()
+    background(darkslateblueColor)
+    
+    pushStyle()
+    
+    hex1:draw()
+    
+    popStyle()
+end
+
+function drawMeshCircle()
+    background(navajowhiteColor)
+    local x = WIDTH/2
+    local y = HEIGHT/2
+    local w = 48
+    local h = 48
+    pushStyle()
+    local starty  = y
+    strokeWidth(2)
+    stroke(darkGrayColor)
+    
+    fill(blackColor)
+    text("mesh circle baby",x,  y + 100)
+    text("mesh circle baby",x,  y + 120)
+    text("mesh circle baby",x,  y + 140)
+    text("mesh circle baby",x,  y + 160)
+    text("mesh circle baby",x,  y + 180)
+    text("mesh circle baby",x,  y + 200)
+    text("mesh circle baby",x,  y + 220)
+    
+    
+    rect(x,y,w,h)
+    y = y + h-1
+    fill(orangeColor)
+    rect(x,y,w,h)
+    
+    -- translate(x,y)
+    meshCircle1:draw()
+    whStone1:draw()
+    blkStone1:draw()
+    blueBead1:draw()
+    yellowBead1:draw()
+    --[[
+    mc1 = MeshCircle(x,y, 44)
+    mc1:draw()
+    ]]
+    popStyle()
+end
+
+
+function testMeshButton()
+    local x = WIDTH/2
+    local y= HEIGHT/2
+    local w = 200
+    local h = 60
+    meshButton1=MeshButton("test mesh",x,y,w,h)
+    meshButton1.action=function() alert("meshing around success!") end
+    
+    --[[
+    self.color1 = color(255, 255, 255, 96)
+    self.color2 = color(128,128,128,32)
+    self.presscolor1 = color(192, 224, 224, 128)
+    self.presscolor2 = color(96, 192, 224, 128)
+    
+    ]]
+    y = y - 70
+    w = w + 40
+    meshButton2=MeshButton("test color mesh",x,y,w,h)
+    c1 = color(255, 100, 100, 96)
+    c2 = color(0,128,100,32)
+    pc1 = color(192, 224, 0, 128)
+    pc2 = color(96, 192, 0, 128)
+    c1=lightlightGrayColor
+    c2=lightGrayColor
+    pc1=lightGrayColor
+    pc2=grayColor
+    c1=antiquewhiteMeshColor
+    c2=tanMeshColor
+    pc1=rosybrownMeshColor
+    pc2=brownMeshColor
+    c1=whiteMeshColor
+    c2=ivoryMeshColor
+    pc1=linenMeshColor
+    pc2=antiquewhiteMeshColor
+    c1 = ivoryMeshColor
+    c2 = lightslateblueColor
+    pc1 = slateblueColor
+    pc2 = darkslateblueColor
+    meshButton2:setColors(c1,c2,pc1,pc2)
+    meshButton2.textColor=blackColor
+    meshButton2.action=function() alert("color that mesh!") end
+    testingMeshButton = true
+end
+
+function testFloatingMessagePanel()
+    print("testFloatingMessagePanel()")
+    floatingMessagePanel1 = MessagePanel("This is a floater!")
+    -- floatingMessagePanel1.active =true
+    floatingMessagePanel1.msgType=MESSAGE_PANEL_FLOATING
+    testingFloatingMessagePanel=true
+    floatingMessagePanel1.active=true
+    
+end
+
+function drawFloatingMessagePanel()
+    background(40, 40, 50)
+    -- tween( 1.0, self.c1, { x = destX } )
+    local destX=floatingMessagePanel1.x + 8
+    tween( 2.0, floatingMessagePanel1, {x=destX}, tween.easing.linear,  function() endFloatingMessagePanel() end )
+    
+    floatingMessagePanel1:draw()
+end
+
+function endFloatingMessagePanel()
+    print("end floating message panel")
+    floatingMessagePanel1.active=false
+    -- testingFloatingMessagePanel=false
+end
+
+function testMessagePanel()
+    print("testMessagePanel()")
+    
+    messagePanel1 = MessagePanel("Are you OK with the Message Panel, now that I've mucked about?")
+    messagePanel1.active =true
+    testingMessagePanel=true
+end
+
+function drawMessagePanel()
+    -- background(40, 40, 50)
+    local x = WIDTH/2
+    local y = HEIGHT/2
+    local w = 45
+    local h = 45
+    
+    --[[
+    imageTextButton1.pos=vec2(x,y)
+    imageTextButton1.w=w
+    imageTextButton1.h=h
+    ]]
+    messagePanel1:draw()
+end
+
+function testScrollText()
+    print("testScrollText()")
+    -- alert("test ScrollText")
+    testingScrollText = true
+    local x = WIDTH/6
+    local y=HEIGHT/10 -3
+    local w=WIDTH*2/3
+    local h=HEIGHT*3/4
+    local logText = ""
+    local logTextTable = {}
+    max = 200
+    for i = 1, max do
+        local s = "This is a text entry - let's call it #"..i
+        table.insert(logTextTable, s)
+        --[[
+        local pm = "\nThis could be a page marker"
+        table.insert(logTextTable, pm)
+    end
+        ]]
+    end
+    logText = table.concat(logTextTable, "\n")
+    scrollText1 = ScrollText(logText,x ,y, w, h)
+    -- scrollText1.numLines = #logTextTable
+    
+    pgupButton = Button("pgup")
+    pgupButton.action = function() scrollText1:pgUp()   end
+    pgdnButton = Button("pgdn")
+    pgdnButton.action = function() scrollText1:pgDn()   end
+    
+    topButton = Button("top")
+    topButton.action = function() scrollText1:gotoTop()   end
+    
+    endButton = Button("end")
+    endButton.action = function() scrollText1:gotoEnd()   end
+    
+    
+end
+
+
+function testImageText()
+    print("testImageText()")
+    
+    imageTextButton1 = ImageTextButton("Documents:menu_icon","Documents:menu_icon",0,0, "menu")
+    imageTextButton2 = ImageTextButton("Documents:undo_icon","Documents:undo_icon",0,0, "menu")
+    imageTextButton2.disabled=true
+    testingImageText=true
+end
+
+function drawMeshButton()
+    background(40, 40, 50)
+    background(lightestslategrayColor)
+    meshButton1:draw()
+    meshButton2:draw()
+end
+function testAdvance()
+    -- Grow move to next square
+    
+    -- c1 = Circle( 0,0,42)
+    -- c2 = Circle(0,0,4)
+    -- c3 = Circle( 0,0,42)
+    --[[
+    tween( 1.0, self.c1, { x = destX } )
+    tween( 1.0, self.c2, { x = destX }, tween.easing.quadInOut )
+    tween( 1.0, self.c3, { x = destX }, tween.easing.bounceOut)
+    ]]
+    
+    -- tween( 1.0, c1, { y = y + 44  }, tween.easing.bounceOut)
+    testingAdvance= true
+    createAdvanceImage=true
+end
+function drawTextReader()
+    -- print("drawTextReadee")
+    background(darkslategrayColor)
+    
+    reader1:draw()
+end
+function drawImageText()
+    background(40, 40, 50)
+    background(ivoryMeshColor)
+    background(lightslategrayColor)
+    local x = WIDTH/2
+    local y = HEIGHT/2
+    local w = 45
+    local h = 45
+    imageTextButton1.pos=vec2(x,y)
+    imageTextButton1.w=w
+    imageTextButton1.h=h
+    imageTextButton1:draw()
+    y = y - 70
+    imageTextButton2.pos=vec2(x,y)
+    imageTextButton2.w=w
+    imageTextButton2.h=h
+    imageTextButton2:draw()
+    
+end
+function drawScrollText()
+    background(40, 40, 50)
+    x= WIDTH/2 - 200
+    y= HEIGHT - 75
+    
+    topButton.pos = vec2(x,y)
+    topButton:draw()
+    --[[
+    ]]
+    x = x + 70
+    pgupButton.pos = vec2(x,y)
+    pgupButton:draw()
+    x = x + 70
+    pgdnButton.pos = vec2(x,y)
+    pgdnButton:draw()
+    
+    
+    x = x + 70
+    endButton.pos = vec2(x,y)
+    endButton:draw()
+    
+    
+    scrollText1:draw()
+end
+
+function testPrintFmt()
+    s  = "just a string"
+    -- printFmt("some number: %d. some string:", 17)
+end
+
+function drawAdvance()
+    background(40, 40, 50)
+    local x = WIDTH/2
+    local y = HEIGHT/2
+    local w = 45
+    local h = 45
+    pushStyle()
+    local starty  = y
+    strokeWidth(2)
+    stroke(darkGrayColor)
+    fill(redColor)
+    rect(x,y,w,h)
+    destY = y + 22
+    y = y + h-1
+    fill(orangeColor)
+    rect(x,y,w,h)
+    fill(whiteColor)
+    
+    -- return
+    fill(whiteColor)
+    x = x + 22
+    y = starty + 22
+    if createAdvanceImage then
+        createAdvanceImage=false
+        advC1 = Circle( x,y,42)
+        destY = y + 44
+        -- tween( 1.0, c1, { y = destY }, tween.easing.bounceOutadvC
+        -- tween( 3.0, c1, { x = destY}
+        -- tween( 3.0, advC1, {size = 100},  tween.easing.linear)
+        tween( 0.30, advC1, {y = destY},  tween.easing.linear)
+    end
+    advC1:draw()
+    if true then
+        return
+    end
+    -- Utilities:delay(3000)
+    x = x - 22
+    y = y  - 22
+    y  = y - 75
+    strokeWidth(2)
+    stroke(darkGrayColor)
+    fill(redColor)
+    rect(x,y,w,h)
+    fill(whiteColor)
+    x = x + 22
+    y = y  + 22
+    c3.x= x
+    c3.y =y
+    -- c1:draw()
+    c2:draw()
+    -- c3:draw()
+    
+    popStyle()
+    
+end
+
+function testTween()
+    -- Grow in size
+    
+    c1 = Circle( 0,0,42)
+    c2 = Circle(0,0,4)
+    c3 = Circle( 0,0,42)
+    local x = WIDTH/2
+    local y = HEIGHT/2 -72
+    mc1 = MeshCircle(x,y,20)
+    mc1.tweening=true
+    --[[
+    
+    tween( 0.5, c1, {size = 4}, l,
+    function()
+    print("tween 1 finished")
+end )
+    t2 =  tween( 1.5, c2, {size = 42}, l,
+    function() print("tween 2 finished") end )
+    -- tween.sequence( t1, t2)
+    
+    
+    t3 =   tween( 1.5, c3, {size = 0}, l,
+    function() print("tween t3 finished") end )
+    ]]
+    local destX = x+100
+    tween( 1.5, mc1, {x=destX,diam=100}, tween.easing.linear)
+    -- tween.sequence( t2, t3)
+    testingTween = true
+end
+
+function drawTween()
+    background(40, 40, 50)
+    local x = WIDTH/2
+    local y = HEIGHT/2
+    local w = 45
+    local h = 45
+    pushStyle()
+    strokeWidth(2)
+    stroke(darkGrayColor)
+    fill(redColor)
+    rect(x,y,w,h)
+    fill(whiteColor)
+    x = x + 22
+    y = y + 22
+    c1.x = x
+    c1.y = y
+    c2.x= x
+    c2.y =y
+    -- c1:draw()
+    
+    -- Utilities:delay(3000)
+    x = x - 22
+    y = y  - 22
+    y  = y - 75
+    strokeWidth(2)
+    stroke(darkGrayColor)
+    fill(redColor)
+    rect(x,y,w,h)
+    fill(whiteColor)
+    x = x + 22
+    y = y  + 22
+    c3.x= x
+    c3.y =y
+    -- c1:draw()
+    c2:draw()
+    -- c3:draw()
+    x = x - 22
+    y = y  - 22
+    
+    mc1:draw()
+    
+    popStyle()
+    
+end
+
+function testDelay()
+    print("Test 3000 ms")
+    Utilities:delay(3000)
+    print("delay is done")
+end
+
+function testLoHiPair()
+    level1South = LoHiPair(1, 13)
+    level1East = LoHiPair(13, 25)
+    level1North = LoHiPair(25, 37)
+    level1West = LoHiPair(37, 1)
+    
+    
+    print (level1South.lo)
+    print (level1South.hi)
+    
+    print (level1East.lo)
+    print (level1East.hi)
+    
+    print (level1North.lo)
+    print (level1North.hi)
+    
+    
+    print (level1West.lo)
+    print (level1West.hi)
+    
+    
+end
+
+--# MessagePanel
+MessagePanel = class()
+
+
+MESSAGE_PANEL_CONFIRM = 1
+MESSAGE_PANEL_ALERT = 2
+MESSAGE_PANEL_FLOATING = 3 -- no buttons must be killed in a tween
+
+function MessagePanel:init(str, okStr, cancelStr)
+    self:superInit(str, okStr, cancelStr)
+    
+end
+
+
+function MessagePanel:superInit(str, okStr, cancelStr)
+    -- you can accept and set parameters here 
+    self.message = str
+    self.okStr = okStr or "Ok"
+    self.cancelStr = cancelStr or "Cancel"
+    self.msgType=MESSAGE_PANEL_CONFIRM
+    self.x = WIDTH/2
+    self.y = HEIGHT/2
+    self.action = nil
+    self.fontType ="helvetica-bold"
+    self.borderColor=slategrayColor
+    self.okButton = Button(self.okStr)
+    self.cancelButton = Button(self.cancelStr)
+    self.active = false
+    self.okButton.action = function ()  end
+    self.cancelButton.action = function ()  end
+    self.okButton.border = true
+    self.cancelButton.border = true
+    self.minWidth = 80
+    local w= self.okButton.size.x
+    local h = self.okButton.size.y
+    if w < self.minWidth then
+        -- print("resetting ok button size")
+        self.okButton.minWidth = self.minWidth
+    end
+    w = self.cancelButton.size.x
+    if w < self.minWidth then
+        self.cancelButton.minWidth = self.minWidth
+    end
+end
+
+
+function MessagePanel:draw()
+    -- Codea does not automatically call this method
+    -- print(self.active)
+    if not self.active then
+        -- caller has to set active to true to engage functionality
+        return
+    end
+    pushStyle()
+    textMode(CENTER)
+    local x = self.x
+    local y = self.y 
+    font("HelveticaNeue-bold")
+    fontSize(18)
+    textWrapWidth(400)
+
+    self.w, self.h = textSize(self.message)
+    local w = self.w
+    local h = self.h
+    
+    w = w + 20
+    h = h + 20 + 50
+    bw = w +15
+    bh = h+15
+    bx = x - bw/2
+    by=y-bh/2
+    rx = x- w/2 
+    ry = y-h/2
+    y = y + 20
+    
+    
+    fill(self.borderColor)
+    roundRect(bx,by, bw,bh, 10)
+    fill(ivoryColor)
+    roundRect(rx,ry, w,h, 10)
+    fill(blackColor)
+    text(self.message,x, y +10)
+
+    if self.msgType == MESSAGE_PANEL_CONFIRM then
+        x = x - self.okButton.size.x/2
+        y = y - h/2 +3
+        self.okButton.pos = vec2(x,y)
+        x = x + 110
+        self.cancelButton.pos = vec2(x,y)
+        self.okButton:draw()
+        self.cancelButton:draw()
+    elseif self.msgType == MESSAGE_PANEL_ALERT then
+        y = y - h/2 +3
+        self.okButton.pos = vec2(x,y)
+        self.okButton:draw()
+    else
+        -- floating here - no buttons
+        -- print("floater")
+
+        -- this puts msg aboveboaras
+    end
+    popStyle()
+end
+
+function MessagePanel:touched(touch)
+    -- Codea does not automatically call this method
+    print("MessagePanel:touched(touch)")
+    print(self.active)
+    print(self.msgType)
+    
+    if not self.active then
+        return
+    end
+    if self.msgType == MESSAGE_PANEL_FLOATING then
+        -- no buttons nothing to touch
+        return
+    end
+    -- caller should ensure that active is off before acting on return vale
+    if self.msgType == MESSAGE_PANEL_ALERT then
+        print("alert button")
+        if self.okButton:touched(touch) then
+            print("ok button pressed")
+            self.active = false
+            if self.action then
+                self:action()
+            end
+            return true
+        end
+    end
+    
+    if self.okButton:touched(touch) then
+        self.active = false
+        if self.action then
+            self:action()
+        end
+        self.active = false
+        return true
+    elseif self.cancelButton:touched(touch) then
+        self.active = false
+        return false
+    end
+    -- fall thru no button touchedp
+end
+
+--# LoadDeleteMP
+
+LoadDeleteMP = class(MessagePanel)
+
+function LoadDeleteMP:init(msg,itemName, loadStr, deleteStr, cancleStr)
+    -- you can accept and set parameters here
+    if loadStr == nil then
+        loadStr= "Load"
+    end
+    self:superInit(msg, loadStr, cancelStr)
+    -- self:superInit()
+    self.deleteStr=deleteStr or "Delete"
+    self.deleteButton = Button(self.deleteStr)
+    self.deleteButton.border=true
+    self.itemName=itemName
+    self.loadDeleteMsg=string.format("%s \"%s\"",self.message, self.itemName)
+    
+    -- loadButtom is justa pointer to ok button for clarity
+    self.loadButton = self.okButton
+    
+    -- self.loadAction = function() alert("Load Action goes here") end
+    -- self.deleteAction = function() alert("Delete Action goes here") end
+    self.loadAction = nil
+    self.deleteAction = nil
+    self.loadButton.action=self.loadAction
+    self.deleteButton.action=self.deleteAction
+    
+    
+    --[[
+    self.gameName = name
+    self.parent = parent  -- LoadGameDialog caller
+    self.x = WIDTH/2
+    self.y = HEIGHT/2
+    self.action = nil
+    self.fontType ="helvetica-bold"
+    self.loadButton = Button("Load")
+    self.deleteButton = Button("Delete")
+    self.cancelButton = Button("Cancel")
+    self.active = false
+    self.loadButton.action = function ()  end
+    self.deleteButton.action = function ()   end
+    self.cancelButton.action = function ()  end
+    self.loadButton.border = true
+    self.deleteButton.border = true
+    self.cancelButton.border = true
+    self.minWidth = 80
+    self.loadButton.minWidth = self.minWidth
+    self.deleteButton.minWidth = self.minWidth
+    self.cancelButton.minWidth = self.minWidth    
+    self.confirmLoseExistingMP = MessagePanel("Existing Game will be lost upon Restore. Is this OK?")
+    self.confirmLoseExistingMP.action = function() self:loadGameConfirmed() end
+    self.borderColor=slategrayColor
+      ]]
+    
+end
+
+function LoadDeleteMP:draw()
+    -- Codea does not automatically call this method
+    -- print(self.active)
+    if not self.active then
+        -- caller has to set active to true to engage functionality
+        return
+    end
+    pushStyle()
+    local x = self.x
+    local y = self.y     font("HelveticaNeue-bold")
+    fontSize(18)
+    textWrapWidth(400)
+    -- local msg = string.format("Load or delete game \"%s\"?", self.gameName)
+    local msg=self.loadDeleteMsg
+    local w, h = textSize(msg)
+    
+    
+    w =420
+    h = h + 30 + 50
+    bw = w +15
+    bh = h+15
+    bx = x - bw/2
+    by=y-bh/2
+    rx = x- w/2 
+    ry = y-h/2
+    y = y + 20
+    
+    fill(self.borderColor)
+    roundRect(bx,by, bw,bh, 10)
+    fill(ivoryColor)
+    roundRect(rx,ry, w,h, 10)
+    
+    
+    fill(blackColor)
+    text(msg,x, y )
+
+
+        x = x - self.loadButton.size.x/2 -55
+        y = y - h/2 +15
+        self.loadButton.pos = vec2(x,y)
+        x = x + 110
+        self.deleteButton.pos = vec2(x,y)
+          x = x + 110
+         self.cancelButton.pos = vec2(x,y)
+        self.loadButton:draw()
+        self.deleteButton:draw()
+        self.cancelButton:draw()
+    
+    -- will draw if actove
+    -- self.confirmLoseExistingMP:draw()
+    popStyle()
+
+end
+
+function LoadDeleteMP:touched(touch)
+    -- Codea does not automatically call this method
+    print("LoadDeleteMP:touched(touch)")
+    print(self.active)
+    if not self.active then
+        return
+    end
+    self.loadButton.action=self.loadAction
+    self.deleteButton.action=self.deleteAction
+    
+
+
+    
+    if self.loadButton:touched(touch) then
+ self.active = false 
+        return true
+    elseif self.deleteButton:touched(touch) then
+         self.active = false 
+        return true
+    elseif self.cancelButton:touched(touch) then
+        self.active = false
+        return false
+    end
+      
+    -- fall thru no button touched
+    
+end
+
+
+
+--[[
+function LoadDeleteMP:loadGame(name)  
+    if gameState == GAMESTATE_INPROGRESS then
+        self.confirmLoseExistingMP.active=true
+    else
+        self:loadAndDeserializeGame(name)  
+    end
+    
+end
+
+function LoadDeleteMP:loadGameConfirmed()  
+            self:loadAndDeserializeGame(self.gameName)  
+end
+
+function LoadDeleteMP:loadAndDeserializeGame(name)  
+    local gamename=name..".zgame"
+    local jsonStr = readLocalData(gamename)     
+    self.parent:restoreGame(name,jsonStr)
+    self.parent:close()
+end
+
+  ]]
+
+
+
+
+
+
+
+
+
+
+
+--# LoadDeleteDialog
+LoadDeleteDialog = class()
+
+function LoadDeleteDialog:init(itemTable)
+    -- you can accept and set parameters here
+    print("LoadDeleteDialog:init()")
+    self.x = WIDTH/2
+    self.y = HEIGHT/2
+    self.loadNameTable = itemTable or {}
+    -- self:initLoadNameTable()
+    -- self.menuPanel=panel
+    self.selectedItem=nil
+    self.loadDeleteMsg="Load ot delete the thing"
+    self.loadAction=nil
+    self.deleteAction=nil
+    self.loadDeleteMP=LoadDeleteMP("msg","item")
+    self.reverseSort = false
+    self.loadExt = ".load"
+    local iconSize=40
+    self.pgupButton= ImageTextButton("Documents:pgup_icon", "Documents:pgup_icon",0,0,"pgup")
+    self.pgupButton.action = function() self:pageUp()  end
+    self.pgupButton.w= iconSize
+    self.pgupButton.h= iconSize
+    self.pgupButton.fontColor=blackColor
+ 
+    self.upButton= ImageTextButton("Documents:up_icon", "Documents:up_icon",0,0,"up")
+    self.upButton.action = function() self:moveUp()  end
+    self.upButton.w= iconSize
+    self.upButton.h= iconSize
+    self.upButton.fontColor=blackColor
+    
+    self.downButton= ImageTextButton("Documents:down_icon", "Documents:down_icon",0,0,"down")
+    self.downButton.action = function() self:moveDown() end
+    self.downButton.w= iconSize
+    self.downButton.h= iconSize
+    self.downButton.fontColor=blackColor
+       
+    self.pgdnButton= ImageTextButton("Documents:pgdn_icon", "Documents:pgdn_icon",0,0,"pgdn")
+    self.pgdnButton.action = function() self:pageDown()  end
+    self.pgdnButton.w= iconSize
+    self.pgdnButton.h= iconSize
+    self.pgdnButton.fontColor=blackColor
+    
+    self.sortButton= ImageTextButton("Documents:sort_icon", "Documents:sort_icon",0,0,"sort")
+    self.sortButton.action = function() self:sortLoadNameTable()  end
+    self.sortButton.w= iconSize
+    self.sortButton.h= iconSize
+    self.sortButton.fontColor=blackColor
+    self.action=nil
+    self.closeButton = Button("Close")
+    self.closeButton.minWidth = 100
+    self.closeButton.border = true
+    self.closeButton.action = function() self:close()  end
+    
+    
+    -- self.loadDeleteGameMessagePanel = LoadDeleteGameMessagePanel("your game name here", parent)
+
+    
+    -- if more than displayLimit logs are saved, we use up and down keys to navigate
+    self.startNum=1
+    self.displayLimit=18
+    
+    self.deleteItemMP= MessagePanel("Delete")
+    self.deleteItemMP.action = function() end
+    
+    self.deletedItemMP = MessagePanel("Item deleted.")
+    self.deletedItemMP.msgType = MESSAGE_PANEL_ALERT
+
+    
+
+end
+
+function LoadDeleteDialog:draw()
+-- Codea does not automatically call this method
+    if not self.active then
+        -- caller has to set active to true to engage functionality
+        return
+    end
+    pushStyle()
+    local x = self.x
+    local y = self.y
+    
+    -- textWrapWidth(500)
+    -- local w, h = textSize(self.message)
+    
+    
+    
+    w =  WIDTH - 400
+    h = HEIGHT - 110
+    bw = w +15
+    bh = h+15
+    bx = x - bw/2
+    by=y-bh/2
+    rx = x- w/2
+    ry = y-h/2
+    y = y + 40
+    
+    fill(slategrayColor)
+    roundRect(bx,by, bw,bh, 10)
+    fill(ivoryColor)
+    roundRect(rx,ry, w,h, 10)
+    font("AmericanTypewriter")
+    fontSize(24)
+    fill(blackColor)
+    y = y + 270
+    text("Select game to load or delete:",x,y)
+    y = y - 327
+    
+    w = w - 140
+    h = h - 150
+    bw = w +5
+    bh = h + 5
+    bx = x - bw/2
+    by=y-bh/2
+    rx = x- w/2
+    ry = y-h/2 
+    
+    fill(blackColor)
+    roundRect(bx,by, bw,bh, 5)
+    fill(ivoryColor)
+    roundRect(rx,ry, w,h, 5)
+     fontSize(18)
+        y = y + 280
+    x = x - 120
+    self.pgupButton.pos = vec2(x, y)
+    self.pgupButton:draw()
+    
+    x = x +  60
+    self.upButton.pos = vec2(x, y)
+    self.upButton:draw()
+    
+    x = x +  60
+    self.downButton.pos = vec2(x, y)
+    self.downButton:draw()
+    
+    x = x +  60
+    self.pgdnButton.pos = vec2(x, y)
+    self.pgdnButton:draw()
+    
+    x = x +  60
+    self.sortButton.pos = vec2(x, y)
+    self.sortButton:draw()
+    
+    x=x-110
+        y = y - 565
+    fontSize(20)
+    self.closeButton.pos = vec2(x, y)
+    self.closeButton:draw()
+            y = y + 565
+
+    y = y - 42
+    x=x-10
+    fill(redColor)
+    fontSize(22)
+    local st = self.startNum
+    local num = # self.loadNameTable
+    if num > self.displayLimit then
+        num = self.displayLimit
+    end
+    for i=st,num do
+      local  b = self.loadNameTable[i]
+        -- b.border=true
+        b.pos = vec2(x,y)
+        b:draw()
+        y = y - 28
+    end
+    self.loadDeleteMP:draw()
+    
+    --[[
+    -- loaddelete only visible when it is active
+    self.loadDeleteGameMessagePanel:draw()
+    self.deleteGameMP:draw()
+    -- self.logDeletedMP = MessagePanel("Log Deleted")
+    self.deletedGameMP:draw()
+    self.loadDeleteGameMessagePanel.confirmLoseExistingMP:draw()
+      ]]
+end
+
+function LoadDeleteDialog:touched(touch)
+-- Codea does not automatically call this method
+    -- print("LoadDeleteDialog touched")   
+    if self.loadDeleteMP.active then
+        self.loadDeleteMP:touched(touch)
+        return
+    end  
+    -- self.deleteLogMP:touched(touch)     
+    self.downButton:touched(touch)
+    self.upButton:touched(touch)
+    self.pgdnButton:touched(touch)
+    self.pgupButton:touched(touch)
+    self.sortButton:touched(touch)
+    local num = # self.loadNameTable
+    local st = self.startNum
+    local num = # self.loadNameTable
+    if num > self.displayLimit then
+        num = self.displayLimit
+    end
+    for i=st,num do 
+        local b = self.loadNameTable[i]    
+         print("checking for touch:"..b.displayName)
+        if b:touched(touch) then
+            print(b.displayName)
+            -- alert("Button " b.displayName.." pressed")  
+            self.selectedItem=b.displayName       
+            self.loadDeleteMP=LoadDeleteMP(self.loadDeleteMsg, b.displayName)
+            self.loadDeleteMP.loadAction=self.loadAction
+            self.loadDeleteMP.deleteAction=self.deleteAction
+            print("setting self.loadDeleteMP.active to true")
+            self.loadDeleteMP.active=true
+
+        end   
+    end
+    self.closeButton:touched(touch)
+end
+
+
+
+
+
+
+
+    
+
+
+function LoadDeleteDialog:moveDown() 
+    local tblSz = # self.loadNameTable
+    
+    if tblSz < self.displayLimit/2 then
+        -- for small lists don't bother
+        return
+    end
+    -- displayLimit is idx of last name we sho
+    self.displayLimit = self.displayLimit + 1
+    local realLimit = self.displayLimit
+    if realLimit > tblSz then
+        realLimit = tblSz
+    end
+    if self.startNum > realLimit - 9 then
+        -- we've gone down far enough
+        return
+    end
+    -- ok, actually move it down
+    self.startNum = self.startNum + 1
+    
+    
+end
+
+function LoadDeleteDialog:moveUp() 
+    if self.startNum <= 1 then
+        return
+    end
+    local tblSz = # self.gamedeletedGameMPdeletedGameMPNameTable
+    self.startNum = self.startNum - 1
+        self.displayLimit = self.displayLimit -1
+
+    --[[
+    local realLimit = self.displayLimit
+    if realLimit > tblSz then
+        realLimit = tblSz
+    end
+
+    if self.displayLimit > realLimit - 9 then
+        return
+    end
+      ]]
+
+    
+    
+end
+
+function LoadDeleteDialog:pageUp() 
+    -- print("pageUp()")
+    local tblSz = # self.loadNameTable
+    --[[
+    if tblSz > self.displayLimit then
+        -- pgup makes no sense
+        return
+    end
+      ]]
+    local pgSz =17
+    self.startNum = self.startNum - pgSz
+    -- print("startnum:"..self.startNum)
+    if self.startNum <= 1 then 
+        self.startNum = 1
+        self.displayLimit = 18
+        return
+    end
+    self.displayLimit = self.displayLimit - pgSz
+    -- print("displayLimit:"..self.displayLimit)
+end
+
+function LoadDeleteDialog:pageDown() 
+    local tblSz = # self.loadNameTable
+    if tblSz < self.displayLimit then
+        -- pgdn makes no sense
+        return
+    end
+    local pgSz = 17 -- one less than initial display limit
+    
+    self.startNum = self.startNum + pgSz
+    self.displayLimit = self.displayLimit + pgSz
+    --[[
+    local realLimit = self.displayLimit
+    
+    if realLimit > tblSz then
+        realLimit = tblSz
+    end
+    if self.startNum > realLimit then
+        self.startNum = self.startNum - pgSz
+        -- return
+    end
+      
+    self.displayLimit = realLimit
+    ]]
+end
+
+
+function LoadDeleteDialog:close()
+    self.active = false
+end
+
+function LoadDeleteDialog:loadDeleteGame(name)
+    -- alert("load/delete/cancel for log: "..name)
+    -- make a new one every time
+    self.loadDeleteGameMessagePanel = LoadDeleteGameMessagePanel(name, self)
+    self.loadDeleteGameMessagePanel.active =true
+    
+end
+
+-- this is dine outside if this dialog
+function LoadDeleteDialog:initLoadNameTable()
+    -- print("LoadLogDialog:initLoadNameTable()")
+    self.loadNameTable = {}
+    local t  = listLocalData()
+    local num = # t
+
+    for i=1, num do
+       local name = t[i]
+        -- print("check out: "..name)
+        local startIdx = #name - 6
+        if string.find(name,".zgame",startIdx) == nil then
+            -- no match
+        else
+            -- print("found game: "..name)
+            local idx = #name-6
+            local gamename = string.sub(name,1,idx)
+            local aButton  = Button(gamename)
+            aButton.action = function()  end
+
+            aButton.minWidth = 450
+            table.insert(self.loadNameTable, aButton)  
+        end
+    end
+    -- table.sort (t, function (k1, k2) return k1.str < k2.str end )
+
+    self:sortLoadNameTable()
+    
+    -- num = #self.loadNameTable
+    
+end
+
+function LoadDeleteDialog:sortLoadNameTable()
+    if self.reverseSort then
+        table.sort(self.loadNameTable, function(b1, b2) return b1.displayName > b2.displayName end )
+        self.reverseSort = false
+    else
+        table.sort(self.loadNameTable, function(b1, b2) return b1.displayName < b2.displayName end )
+        self.reverseSort = true
+    end
+    
+end
+
+
+
+function LoadDeleteDialog:deleteGame(name)
+    -- alert("deleteLog: "..name)
+    local gameName=name..".zgame"
+    saveLocalData(gameName, nil)
+    msg = string.format("Game \"%s\" has been deleted", name)
+    self.deletedGameMP.message = msg
+    self.deletedGameMP.active = true
+    self:initLoadNameTable()
+end
+
+function  LoadDeleteDialog:showDeleteConfirm (name)
+    -- print("showDeleteConfirm:"..name)
+    local str =string.format("Delete saved game \"%s\"? (This cannot be undone.)",name)
+    self.deleteGameMP= MessagePanel(str)
+    self.deleteGameMP.action = function() self:deleteGame(name) end
+    self.deleteGameMP.active = true
+end
+
+
+--[[
+
+  ]]
+
+function LoadDeleteDialog:restoreGame(name,jsonStr)
+    print("restoreGame")
+    pasteboard.copy(jsonStr)
+    gameHasBeenRestored=true
+    gameIsBeingRestored=true
+    theMenuPanel:newBoard()
+    local gmSerializer = GameSerializer()
+    -- save current metadaa data need logic to restore
+    
+    local  mdt, mvTable = gmSerializer:deserialize(jsonStr)
+    print("mvTable")
+    print(mvTable)
+    print(#mvTable)
+    if mvTable and #mvTable > 0 then
+        -- ok to continue
+    else
+        return false  
+    end
+
+    -- restore some  meta data to what it was
+    -- at some pount we may need to check version for compatibilit
+    theSettings.playerMode=  mdt.playermode
+    theSettings.blackPlayerName=  mdt.blackplayername
+    theSettings.whitePlayerName= mdt.whiteplayername
+    -- need toget player info in sync
+    theAiPlayer= AIPlayer()
+    mainInit()
+    gameIsBeingRestored=true
+    theMenuPanel:newBoard()
+    local currentGameMetada = gmSerializer:createMetaDataTable() -- this is a table
+    metaJson =json.encode(currentGameMetada)
+    saveLocalData("currentMetaData", metaJson)
+    mainInfoMessage=string.format("%s (restored %s)",defaultInfoMessage,name)
+    -- mainInfoMessage=defaultInfoMessage
+    -- the following gloabals are tracked in move class
+    currentTurnNumber=  mdt.currentturnnumber
+    moveState= mdt.movestate
+    theGameBoard.whiteStonesCaptured=mdt.whitestonescaptured
+    theGameBoard.blackStonesCaptured=mdt.blackstonescaptured
+    theMoveTable=mvTable 
+    local mvObj = theMoveTable[1]
+    updateBoardFromMoveObject(mvObj)
+    checkCurrentPlayLevel()
+    gameState=GAMESTATE_INPROGRESS   
+    if triggerAIFirstMove then 
+        gameHasBeenRestored=true
+    end
+    gameIsBeingRestored=false
+    
+    return true
+end
+
+
+
+
+
+
+
+
+--# SaveCancelDialog
+SaveCancelDialog = class()
+
+function SaveCancelDialog:init(saveName,saveMessage,saveExt)
+    -- you can accept and set parameters here
+    print("SaveCancelDialog:init()")
+    print(saveName)
+    self.saveName = saveName
+    self.saveMessage = saveMessage or "Save:"
+    self.saveExt = saveExt or "sav"
+    self.saveNameTB = TextBox(0, 0, 250, self.saveName)
+    self.saveNameTB.limit = 24
+    self.saveNameLable="Save Name:"
+    self.saveStr = "Save"
+    self.cancelStr = "Cancel"
+    self.x = WIDTH/2
+    self.y = HEIGHT/3*2
+    self.action = nil
+    self.fontType ="helvetica-bold"
+    self.fontSize=18
+    self.saveButton = Button(self.saveStr)
+    self.cancelButton = Button(self.cancelStr)
+    self.active = false
+    self.saveButton.action = function ()  end
+    self.cancelButton.action = function ()  end
+    self.saveButton.border = true
+    self.cancelButton.border = true
+    self.minWidth = 80
+    self.saveButton.minWidth = self.minWidth
+    self.cancelButton.minWidth = self.minWidth
+    self.borderColor=slateblueColor
+    
+end
+
+function SaveCancelDialog:draw()
+-- Codea does not automatically call this method
+    -- print(self.active)
+    if not self.active then
+        -- caller has to set active to true to engage functionality
+        return
+    end
+    pushStyle() 
+    local x = self.x
+    local y = self.y
+    font(self.fontType)
+    fontSize(self.fontSize)
+    textWrapWidth(500)
+    local w, h = textSize(self.saveMessage)
+    w = w + 280
+    h = h + 20 + 100
+    bw = w +15
+    bh = h+15
+    bx = x - bw/2
+    by=y-bh/2
+    rx = x- w/2
+    ry = y-h/2
+    y = y + 20
+    
+    fill(self.borderColor)
+    roundRect(bx,by, bw,bh, 10)
+    fill(ivoryColor)
+    roundRect(rx,ry, w,h, 10)  
+    fill(blackColor)
+    y = y + 20
+    text(self.saveMessage,x, y +10)
+    y = y - 25
+    x = x - 120
+    text(self.saveNameLable, x, y)
+    x = x + 60
+    y=y-10
+    self.saveNameTB.x = x
+    self.saveNameTB.y = y
+    self.saveNameTB:draw()
+    x = x - self.saveButton.size.x/2 + 45
+    y = y - 45
+    self.saveButton.pos = vec2(x,y)
+    x = x + 110
+    self.cancelButton.pos = vec2(x,y)
+    self.saveButton:draw()
+    self.cancelButton:draw()
+    popStyle()
+end
+
+function SaveCancelDialog:touched(touch)
+-- Codea does not automatically call this method
+    -- print(self.active)
+    if not self.active then
+        return
+    end
+    
+    if self.saveNameTB:touched(touch) then
+        showKeyboard()
+        self.saveNameTB.acceptInput = true
+        textBoxAcceptingInput = self.saveNameTB
+    else
+        textBoxAcceptingInput = nil
+        self.saveNameTB.acceptInput = false
+        hideKeyboard()
+    end
+    if self.saveButton:touched(touch) then
+        self.active = false
+        if self.action then
+            self.action()
+        end
+        self.saveName = self.saveNameTB.text
+        return true
+    elseif self.cancelButton:touched(touch) then
+        self.active = false
+        return false
+    end
+    -- fall thru no button touchedp
+end
+
+
+
+
+
+    
+
+--# SelectDialog
+SelectDialog = class()
+
+function SelectDialog:init(selectItemTable, selected, selectDisplayTable, hasCancel)
+    print("SelectDialog init")
+    self.x=WIDTH/2
+    self.y=HEIGHT/2
+    self.w =  100
+    self.h = 260
+    self.active=false
+    self.selectArray={}
+
+
+    self.selectItemTable=selectItemTable
+    self.selected=selected or nil
+    self.selectDisplayTable = selectDisplayTable or nil
+    self.hasDisplayTable=false
+    if self.selectDisplayTable then
+        self.hasDisplayTable=true
+    end
+    self.selectedBorderColor=darkGrayColor
+    self.borderColor=slateblueColor
+    self.dialogColor=ivoryColor
+    self.action=nil
+    self.minWidth=80
+    self.fontSize=24
+    self.font="HelveticaNeue-Bold"
+
+    self.cancelButton = Button("Cancel", -1)
+    self.cancelButton.action=function() return false end
+    self.cancelButton.minWidth= self.minWidth
+    self.cancelButton.color=redClearColor
+    self.hasCancel=hasCancel or true
+
+    self:makeArray()
+    self:adjustWidthAndHeight()
+end
+
+function SelectDialog:adjustWidthAndHeight()
+    local sTable = self.selectItemTable
+    if self.hasDisplayTable then
+        sTable = self.selectDisplayTable
+    end
+    local maxW=0
+    local sz=#sTable
+    fontSize(self.fontSize)
+    font(self.font)
+    print(sz)
+    local iw=0
+    local ih=0
+    for i=1, sz do
+        local item=sTable[i]
+        iw,ih=textSize(item)
+        if iw>maxW then
+            maxW=iw
+        end
+    end
+    if self.hasCancel then
+        local cw,ch=textSize("Cancel")
+        if cw>maxW then
+            maxW=cw
+        end
+        sz = sz + 1
+    end
+    self.minWidth=maxW
+    self.w = maxW+25
+    self.h = sz*(ih + 5)
+    s=string.format("self.w=%f  self.h=%f ", self.w, self.h  )
+    print(s)
+end
+
+function SelectDialog:makeArray()
+    print("SelectDialog:makeArray()")
+    self.selectArray={}
+    print("self.selected:")
+    print(self.selected)
+    local sTable = self.selectItemTable
+    fontSize(self.fontSize)
+    font(self.font)
+    local txt=nil
+    local key = nil
+    print("size sTable;"..#sTable)
+    for i=1, #sTable do
+        txt = sTable[i]
+        if self.hasDisplayTable then       
+            txt=self.selectDisplayTable[i]
+            key = sTable[i]
+            print("hasDisplayTable true, showing txt&key ")
+            print(txt)
+            print(key)
+        end
+        local b = Button(txt, key)
+        b.action=function() end
+        b.minWidth= self.minWidth
+        if self.hasDisplayTable then
+            if self.selected and self.selected == key then
+                print("selected key:"..key)
+                b.border=true
+                b.borderColor=self.selectedBorderColor
+            end
+        else
+            if self.selected and self.selected == txt then
+                print("selected txt:"..txt)
+                b.border=true
+                b.borderColor=self.selectedBorderColor
+            end
+        end
+        table.insert(self.selectArray,1,b)   
+    end
+    if self.hasCancel then
+        print("inserting cancel button")
+        table.insert(self.selectArray,1,self.cancelButton)
+    end
+    print("size selectArray:"..#self.selectArray)
+end
+    
+    function SelectDialog:draw()
+    -- Codea does not automatically call this method
+    if not self.active then
+        -- caller has to set active to true to engage functionality
+        return
+    end
+    pushStyle()
+    local x = self.x
+    local y = self.y 
+    local w =  self.w
+    local h = self.h +5
+    local bw = w +15
+    local bh = h+15
+    local bx = x - bw/2
+    local by=y-bh/2
+    local rx = x- w/2
+    local ry = y-h/2
+
+    fill(self.borderColor)
+    roundRect(bx,by, bw,bh, 10)
+    fill(self.dialogColor)
+    roundRect(rx,ry, w,h, 10)
+    local ar=self.selectArray
+    local sz=#ar
+    -- y = y + 40 
+    y = y - sz*(self.fontSize/2)
+    -- hack,hack
+    if sz <= 4 then
+        y = y + 3
+    else
+        y = y - 10
+    end
+    x = x
+    
+    for i = 1, #ar do
+        b=ar[i]
+        b.pos=vec2(x,y)
+        y = y + self.fontSize + 10    
+        b:draw()
+    end
+    
+end
+
+function SelectDialog:touched(touch)
+    -- Codea does not automatically call this method
+    local ar=self.selectArray
+    for i = 1, #ar do
+        b=ar[i]
+        if b:touched(touch) then
+            print("button touched")
+            print(b.displayName)
+            print(b.key)
+            print("running button action")
+            self.selected=b.displayName
+            if (b.key) then
+                if b.key == - 1 then
+                    self.active=false
+                    return false
+                end
+                self.selected=b.key
+            end
+            self:makeArray()
+            self.action(self.selected)
+            self.active=false
+            return true
+        end
+    end
+    return false
+
+end
+
+--# Button
+Button = class()
+
+function Button:init(displayName, key)
+    -- you can accept and set parameters here
+    self.displayName = displayName
+    self.key = key or nil
+    print("Button:init. showing displayName & key")
+    print(self.displayName)
+    print(self.key)
+    self.pos = vec2(0,0)
+    self.size = vec2(0,0)
+    self.action = nil
+    self.color = ivoryColor
+    self.pressedColor = lightlightGrayColor
+    self.disabledColor = grayColor
+    self.disabled = false
+    self.pressed = false
+    self.border = false
+    self.borderColor=darkGrayColor
+    self.minWidth = 0
+end
+
+function Button:draw()
+    -- Codea does not automatically call this method 
+    pushStyle()
+    textMode(CENTER)
+    -- font("ArialRoundedMTBold")
+    -- fsontSize(14)
+    
+    -- use longest sound name for size
+    local w,h= textSize(self.displayName)
+    local x = self.pos.x
+    local y = self.pos.y
+    if (w < self.minWidth) then
+        w = self.minWidth
+    end
+    w = w + 16
+    h = h + 3
+    if self.border  then
+        fill(self.borderColor)
+        bw = w + 5
+        bh = h + 5
+        roundRect(x - bw/2,
+            y - bh/2,
+              bw, bh,3)
+    end
+    if self.disabled then
+        fill(self.disabledColor)
+    elseif self.pressed then
+        fill(self.pressedColor)
+    else
+        fill(self.color)
+    end
+     roundRect(x - w/2,  y - h/2, w,h,3)
+            
+    self.size = vec2(w,h)
+
+    textMode(CENTER)
+    -- font("HelveticaNeue-Bold")
+    -- fill(54, 65, 96, 255)
+    -- fill(darkGrayColor)
+    -- text(self.displayName,self.pos.x+2,self.pos.y-2)
+    -- fill(255, 255, 255, 255)
+    fill(darkGrayColor)
+    text(self.displayName,self.pos.x,self.pos.y)
+    
+    popStyle()
+end
+
+function Button:hit(p)
+    local l = self.pos.x - self.size.x/2
+    local r = self.pos.x + self.size.x/2
+    local t = self.pos.y + self.size.y/2
+    local b = self.pos.y - self.size.y/2
+    if p.x > l and p.x < r and
+       p.y > b and p.y < t then
+        print("button was hit")
+        return true
+    end
+    -- print("button not hit")
+    return false
+end
+
+function Button:touched(touch)
+    -- Codea does not automatically call this method
+    -- print("Button:touched. displayName:"..self.displayName)
+    if self.disabled then
+        return
+    end
+    if self:hit(vec2(touch.x,touch.y)) then
+        if touch.state == BEGAN 
+        -- or touch.steate == MOVING 
+            then
+            self.pressed = true
+        else
+            self.pressed = false
+        end
+        if touch.state == ENDED then
+            if self.action then
+                print("running button action")
+                self.action()
+                return true
+            end
+            self.pressed = false
+            return true
+        end 
+    end
+end
+
+--# Hexagon
+Hexagon = class()
+
+
+-- draws equilateral hexagon with lower right vertex at x,y with sides if len
+-- filled with color specified +- es mesh
+function Hexagon:init(x,y,len,c)
+    -- you can accept and set parameters here
+    self.x = x
+    self.y = y
+    self.len = len
+    self.color = c or tanColor
+
+    self:setupHexMesh()
+end
+
+function Hexagon:setupHexMesh()
+    print("setupHexMesh")
+    local x = self.x
+    local y = self.y
+    local len = self.len
+    local sqrt3=math.sqrt(3)
+    local yLen = (len/2)*sqrt3
+    
+    local v1=vec2(x,y)
+    local v2=vec2(x - len/2 ,y + yLen)
+    local v3=vec2(x ,y + 2*yLen)
+    local v4=vec2(x + len,y + 2*yLen)
+    local v5=vec2(x + len + len/2,y + yLen)
+    local v6=vec2(x + len,y)
+  
+    t= { v1,v2,v3,v4,v5,v6 }
+    hex=triangulate(t)
+    for i = 1, #hex, 3 do
+        local p = {hex[i], hex[i+1], hex[i+2]}
+        -- print(unpack(p))     -- Outputs: six triangles
+    end
+    -- print("size hex:",#hex)
+    self.hexMesh=mesh()
+    self.hexMesh.vertices=hex
+
+    colorTable={}
+    smooth()
+    
+        self.hexMesh:setColors(self.color)
+
+    
+    
+    -- hexMesh.vertices=hex
+    -- hexMesh:setColors(self.color)
+end
+
+printInDraw=true
+
+function Hexagon:draw()
+    -- Codea does not automatically call this method
+   pushMatrix()
+    pushStyle()
+    -- Translate coordinates to the middle of the screen
+    
+    -- translate(WIDTH/2, HEIGHT/2)
+    translate(0,0)
+    -- hexMesh:setColors(self.color)
+    if printInDraw then
+        print("calling hexMeshDraw")
+    end
+    
+
+    self.hexMesh:draw()
+    popStyle()
+    popMatrix() 
+    printInDraw=false
+end
+
+function Hexagon:touched(touch)
+    -- Codea does not automatically call this method
+end
+
+--# ImageTextButton
+
+ImageTextButton = class()
+
+function ImageTextButton:init(btnNorm,btnSel,x,y, textStr)
+    self.pos = vec2(x,y)
+    self.btnNorm = btnNorm
+    self.btnSel = btnSel
+    self.disabled = false
+    self.selected = false
+    self.action = nil
+    self.w,self.h = spriteSize(self.btnNorm)
+
+
+    self.size = vec2(self.w, self.h)
+    self.text = textStr
+    self.font ="Courier"
+    self.font ="Helvetica"
+    self.fontSize = 12
+    self.fontColor = ivoryColor
+    self.rectW =  0
+    self.rectH =  0
+    self.rectX =  0
+    self.rectY =  0
+    local textW, textH = textSize(self.text)
+    self.textX = self.pos.x
+    self.textY = self.pos.y
+    self.color=transparentColor
+    -- self.color=redColor
+end
+
+function ImageTextButton:draw()
+    pushStyle()
+    textMode(CENTER)
+    local textW, textH = textSize(self.text)
+    string.format("textW: %d   textH: %d",textW,textH)
+   self.rectW = self.w 
+    --[[
+    if textW > self.w then
+        self.rectW = textW
+    end
+      ]]
+    self.rectW = self.rectW + 2
+    self.rectX =  self.pos.x
+    self.rectY =  self.pos.y
+    self.rectH = self.h + textH +2
+    fill(self.color)
+    
+    roundRect(self.rectX - self.rectW/2,  self.rectY - self.rectH/2, self.rectW, self.rectH, 3)
+    if self.selected == true then
+        sprite(self.btnSel,self.pos.x + 2,self.pos.y + 2,self.w,self.h)
+    elseif self.selected == false then
+         sprite(self.btnNorm,self.pos.x,self.pos.y + textH/2 + 2,self.w,self.h)
+    end
+    if self.textX==0 then
+        self.textX = self.pos.x
+        self.textY = self.pos.y - textH/2
+    end
+    fontSize(self.fontSize)
+    font(self.font)
+    fill(self.fontColor)
+    text(self.text, self.textX, self.textY)
+    if self.selected then
+        fill(selectedColor)
+        roundRect(self.rectX - self.rectW/2,  self.rectY - self.rectH/2, self.rectW, self.rectH, 3)
+    elseif self.disabled then
+        fill(disabledColor)
+        roundRect(self.rectX - self.rectW/2,  self.rectY - self.rectH/2, self.rectW, self.rectH, 3)
+    end
+    popStyle()
+end
+
+function ImageTextButton:hit(p)
+    --[[
+    local l = self.pos.x - self.size.x/2
+    local r = self.pos.x + self.size.x/2
+    local t = self.pos.y + self.size.y/2
+    local b = self.pos.y - self.size.y/2
+      ]]
+    local l = self.rectX - self.rectW/2 - 2
+    local r = self.rectX + self.rectW/2 + 2
+    local t = self.rectY + self.rectH/2 + 2
+    local b = self.rectY - self.rectH/2 - 2
+    
+    
+    
+    if p.x > l and p.x < r and
+       p.y > b and p.y < t then
+        print("button was hit")
+        return true
+    end
+    -- print("button not hit")
+    return false
+end
+
+function ImageTextButton:touched(touch)
+    -- Codea does not automatically call this method
+    -- print("Button:touched. displayName:"..self.displayName)
+    if self.disabled then
+        return
+    end
+    w=self.rectW 
+    x=self.rectX 
+    y=self.rectY 
+    h=self.rectH
+    if touch.state == BEGAN
+    and pointInRect(touch.x, touch.y, x, y, w+5, h+5) then
+        self.selected = true
+    else
+        self.selected = false
+    end
+    if touch.state == ENDED
+    and pointInRect(touch.x, touch.y, x, y, w, h) then
+        if self.action then
+            print("running button action")
+            self.action()
+            return true
+        end
+    end
+    
+end
+
+
+function ImageTextButton:xxxtouched(touch)
+    -- Codea does not automatically call this method
+    -- print("Button:touched. displayName:"..self.displayName)
+    if self.disabled then
+        return
+    end
+    if touch.state == BEGAN 
+        and self:hit(vec2(touch.x,touch.y)) then   
+        
+        self.selected = true
+    else
+        self.selected = false
+    end
+    if touch.state == ENDED and
+    self:hit(vec2(touch.x,touch.y)) then   
+        if self.action then
+            print("running button action")
+            self.action()
+            return true
+        end
+    end
+    
+end
+
+
+--# MeshCircle
+MeshCircle = class()
+
+function MeshCircle:init(x,y,diam,insideColor,outsideColor)
+    -- you can accept and set parameters here
+    self:settings(x,y,diam,insideColor,outsideColor)
+    
+end
+
+function MeshCircle:settings(x,y,diam,insideColor,outsideColor)
+    self.x = x
+    self.y = y
+    self.diam = diam
+    self.insideColor=insideColor or whiteColor
+    self.outsideColor=outsideColor or agedIvoryColor
+    self.tweening=false
+    self.hasBorder=true
+    self.borderColor=grayColor
+    self.borderCircle=nil
+    self.mesh = mesh()
+    self:makeMesh()
+    self:makeBorder()
+
+end
+
+function MeshCircle:makeBorder()
+    pushStyle()
+    if  self.hasBorder then
+        -- print("hasBorder")
+        fill(transparentColor)
+        -- fill(redColor)
+        strokeWidth(1)        stroke(self.borderColor)
+        ellipseMode(CORNER)
+        self.borderCircle=Circle(self.x-2,self.y-2,self.diam+4)
+        -- self.borderCircle=Circle(50,50,200)
+    else
+        print("no border")
+        self.borderCircle=nil
+    end  
+    popStyle()
+end
+
+function MeshCircle:makeMesh()
+local fs = function(i)
+        return (math.sin(i) + 1) * 0.5
+    end
+    local fc = function(i)
+        return (math.cos(i) + 1) * 0.5
+    end
+    -- img = readImage("Cargo Bot:Codea Icon")
+    -- w, h = spriteSize(img)
+   local w = self.diam
+   local h = self.diam
+
+    local v = {}
+    local tc = {}
+    local c = {}
+
+    
+    --[[
+        local ic = 255 -- Inside brightness
+        local oc = 240 -- Outside brightness
+        local ia = 255 -- Inside alpha
+        local oa = 255 -- Outside alpha
+      
+      ]]
+    
+    
+    --[[
+        local ic = 80 -- Inside brightness
+        local oc = 0 -- Outside brightness
+       local ia = 200 -- Inside alpha
+        local oa = 255 -- Outside alpha
+      
+      ]]
+    
+    local precision = 32
+    for rad = 0, (2 * math.pi) - (math.pi / precision), math.pi / precision do
+        local nrad = rad + (math.pi / precision)
+        table.insert(v, vec2(w * fs(rad), h * fc(rad)))
+        table.insert(v, vec2(w / 2, h / 2))
+        table.insert(v, vec2(w * fs(nrad), h * fc(nrad)))
+        table.insert(tc, vec2(fs(rad), fc(rad)))
+        table.insert(tc, vec2(0.5, 0.5))
+        table.insert(tc, vec2(fs(nrad), fc(nrad)))
+        --[[
+        table.insert(c, color(oc, oa))
+        table.insert(c, color(ic, ia))
+        table.insert(c, color(oc, oa))
+          ]]
+         table.insert(c, self.outsideColor)
+        table.insert(c, self.insideColor)     
+        table.insert(c, self.outsideColor)
+          
+    end
+    self.mesh.vertices = v
+    self.mesh.texCoords = tc
+    self.mesh.colors = c
+end
+
+
+
+function MeshCircle:draw()
+    -- Codea does not automatically call this method
+    pushStyle()
+    if self.hasBorder then
+        
+        fill(transparentColor)
+        strokeWidth(1)
+        stroke(self.borderColor)
+        ellipseMode(CORNER)
+        if self.tweening then
+            self:makeBorder()
+        end
+        self.borderCircle:draw()
+    end
+    pushMatrix()
+    translate(self.x,self.y)
+    -- print("draw mesh circle")
+    if self.tweening then
+        self:makeMesh()
+    end
+    self.mesh:draw()
+    popMatrix()
+    popStyle()
+end
+
+function MeshCircle:touched(touch)
+    -- Codea does not automatically call this method
+end
+
+--# TextReader
+TextReader = class()
+
+function TextReader:init(textTable,x,y,w,h)
+    -- you can accept and set parameters here
+    self.textTable = textTable
+    self.x = x or WIDTH/2
+    self.y = y or HEIGHT/2
+    self.w = w or 700
+    self.h = h or 600
+    self.hasBorder=true
+    self.hasButtons=true
+    self.hasEnclosingPanel=true
+    
+    
+    self.borderColor=slategrayColor
+    self.topPanelColor=ivoryColor
+    self.panelColor=ivoryColor
+    self.readerColor=ivoryColor
+    self.readerBoxColor=blackColor
+    self.borderOutline=20
+    self.headerText="Text Reader"
+    self.fsize=18
+    self.ftype="Courier"
+    self.textFontColor=darkGrayColor
+    self.textStart=1
+    self.pageSize=26
+    self.centeredText=false
+    self.indent=10
+    
+  self.pgupButton= ImageTextButton("Documents:pgup_icon", "Documents:pgup_icon",0,0,"pgup")
+    self.pgupButton.action = function() self:pageUp()  end
+    self.pgupButton.w= 32
+    self.pgupButton.h= 32
+    self.pgupButton.fontColor=blackColor
+    -- self.pgupButton.textY = self.pgupButton.textY - 6
+ 
+    self.upButton= ImageTextButton("Documents:up_icon", "Documents:up_icon",0,0,"up")
+    self.upButton.action = function() self:moveUp()  end
+    self.upButton.w= 32
+    self.upButton.h= 32
+    self.upButton.fontColor=blackColor
+    -- self.upButton.textY = self.upButton.textY - 6
+    
+    self.downButton= ImageTextButton("Documents:down_icon", "Documents:down_icon",0,0,"down")
+    self.downButton.action = function() self:moveDown() end
+    self.downButton.w= 32
+    self.downButton.h= 32
+    self.downButton.fontColor=blackColor
+
+       
+    self.pgdnButton= ImageTextButton("Documents:pgdn_icon", "Documents:pgdn_icon",0,0,"pgdn")
+    self.pgdnButton.action = function() self:pageDown()  end
+    self.pgdnButton.w= 32
+    self.pgdnButton.h= 32
+    self.pgdnButton.fontColor=blackColor
+ 
+    
+    
+    self.topButton = ImageTextButton("Documents:gototop_icon", "Documents:gototop_icon",0,0,"top")
+    self.topButton.action = function() self:gotoTop()   end
+    self.topButton.w= 32
+    self.topButton.h= 32
+    self.topButton.fontColor=blackColor
+    
+    
+    self.endButton= ImageTextButton("Documents:gotoend_icon", "Documents:gotoend_icon",0,0,"end")
+    self.endButton.action = function() self:gotoEnd()   end
+    self.endButton.w= 32
+    self.endButton.h= 32
+    self.endButton.fontColor=blackColor
+    
+    
+    -- add scrollong
+    scrollingUp=false
+    scrollingDown=false
+    
+    --[[
+    print("******* START:TextReader TextTable dump ********")
+    local t=self.textTable
+    for i=1,#t do
+        print(t[i])
+    end
+    print("*******   END:TextReader TextTable dump ********")
+    
+      ]]
+    
+
+end
+
+
+movingTouchCounter=0
+movingTouchY=0
+justprintit=true
+function TextReader:draw()
+    -- Codea does not automatically call this method
+    local x=self.x
+    local y=self.y
+    local w=self.w
+    local h=self.h
+    local out=self.borderOutline
+    
+    bw = w+out
+    bh = h+out
+    bx = x - bw/2
+    by=y-bh/2
+    rx = x- w/2 
+    ry = y-h/2
+    -- toppanel rect
+    px=rx+10
+    py=ry+500
+    pw=w-20
+    ph=h-590
+
+    pushStyle()
+    -- rectMode(CORNERS)
+    if self.hasBorder then
+        fill(self.borderColor)
+        roundRect(bx,by, bw,bh, 10)
+    end
+     
+    if self.hasEnclosingPanel then
+        fill(self.panelColor)
+        roundRect(rx,ry, w,h, 10)
+        
+    end
+    x = x - 130
+    y = y + 240
+    if self.hasButtons then     
+        fill(self.panelColor)
+        roundRect(rx,ry, w,h, 10)
+        
+        self.topButton.pos=vec2(x,y)
+        self.topButton.textY=y-10
+        self.topButton:draw()
+        x = x + 50
+        self.pgupButton.pos=vec2(x,y)
+        self.pgupButton.textY=y-10       
+        self.pgupButton:draw()
+        
+        x = x + 50
+        self.upButton.pos=vec2(x,y)
+        self.upButton.textY=y-10       
+        self.upButton:draw()
+        
+        x = x + 50
+        self.downButton.pos=vec2(x,y)
+        self.downButton.textY=y-10       
+        self.downButton:draw()
+        
+        x = x + 50
+        self.pgdnButton.pos=vec2(x,y)
+        self.pgdnButton.textY=y-10       
+        self.pgdnButton:draw()
+        
+        x = x + 50
+        self.endButton.pos=vec2(x,y)
+        self.endButton.textY=y-10       
+        self.endButton:draw()
+    else
+        x = x + 250
+        y = y + 36
+    end
+    
+    
+    rbx=rx+10
+    rby=ry+10
+    rbw=w-20
+    rbh=h-80
+    fill(self.readerBoxColor)
+ 
+    
+     roundRect(rbx,rby,rbw,rbh,10)
+    rbx=rbx+4
+    rby=rby+4
+    rbw=rbw-8
+    rbh=rbh-8
+    fill(self.readerColor)
+    
+    roundRect(rbx,rby,rbw,rbh,10)
+    font(self.ftype)
+    fontSize(self.fsize)
+    if self.hasBorder then
+    end
+    
+    
+    
+    if self.centeredText then
+        x = x -120
+        y = y-52
+        textMode(CENTER)
+    else
+        x = x - 420
+        x = x + self.indent
+        y = y -64
+        textMode(CORNER)
+    end
+    
+    local tStop = self.textStart+self.pageSize
+    if tStop > #self.textTable then
+        
+        tStop=#self.textTable
+    end
+    
+    fill(self.textFontColor)
+    
+    for i=self.textStart,tStop do
+        local str=self.textTable[i]
+        if str then
+            text(str,x,y)
+            y = y - self.fsize
+        end
+    end
+    
+    prx=math.floor(rbx)
+    pry=rby
+    prw=rbw
+    prh=rbh
+    
+    if justprintit then
+        justprintit=false
+        print(prx)
+        local s=string.format("prx:%d pry:%d prw:%d prh:%d ",prx,pry,prw,prh)
+        print(s)
+    end
+    if pointInRect(CurrentTouch.x, CurrentTouch.y, prx, pry, prw, prh) then
+        if CurrentTouch.state == BEGAN then
+            -- fill(16, 178, 197, 255)
+        elseif CurrentTouch.state == MOVING then
+            -- fill(255, 0, 0, 255)
+            movingTouchCounter = movingTouchCounter + 1
+            if movingTouchCounter %3 then
+                if movingTouchY==0 then
+                    movingTouchY=CurrentTouch.y
+                else
+                    local delta = CurrentTouch.y - movingTouchY
+                    if delta > 2 then
+                        self:moveDown()
+                    elseif delta < -2 then
+                        self:moveUp()
+                    else
+                    end
+                    movingTouchY=CurrentTouch.y
+                end
+            end
+        elseif CurrentTouch.state == ENDED then
+            -- fill(210, 218, 16, 255)
+        end
+    end
+    
+    popStyle(self)
+end
+
+
+
+
+function TextReader:gotoTop()
+    print("TextReader:gotoTop()")
+    self.textStart = 1
+end
+
+function TextReader:pageUp()
+    print("TextReader:pageUp()")
+    self.textStart = self.textStart - self.pageSize
+    if self.textStart < 1 then
+        self.textStart = 1
+    end
+end
+
+function TextReader:moveUp()
+    if self.textStart > 1 then
+        self.textStart = self.textStart - 1
+    end
+end
+
+function TextReader:moveDown()
+    local limit = #self.textTable - self.pageSize
+    self.textStart = self.textStart + 1
+    if self.textStart > limit then
+        self.textStart = limit
+    end
+end
+
+function TextReader:pageDown()
+    print("TextReader:pageDown()")
+    local limit = #self.textTable - self.pageSize
+    self.textStart = self.textStart + self.pageSize
+    if self.textStart > limit then
+        self.textStart = limit
+    end
+end
+
+function TextReader:gotoEnd()
+    print("TextReader:gotoEnd()")
+    self.textStart = #self.textTable - self.pageSize
+    if self.textStart < 1 then
+        self.textStart = 1
+    end
+end
+
+function TextReader:touched(touch)
+    -- Codea does not automatically call this method
+    if self.hasButtons then
+        self.topButton:touched(touch)
+        self.pgupButton:touched(touch)
+        self.upButton:touched(touch)
+        self.downButton:touched(touch)
+        self.pgdnButton:touched(touch)
+        self.endButton:touched(touch)
+    end
+    
+    -- pseudo scrolling
+    
+    
+end
+
+
+
+
+
+
+--# WhiteStone
+WhiteStone = class(MeshCircle)
+
+function WhiteStone:init(x,y,diam)
+    -- you can accept and set parameters here
+    self:settings(x,y,diam,whiteColor,agedIvoryColor)
+
+    --[[
+    self.insideColor=whiteColor
+    self.outsideColor=agedIvoryColor
+    -- self.outsideColor=whiteColor
+        self:makeMesh()
+      ]]
+end
+
+
+
+--# BlackStone
+BlackStone = class(MeshCircle)
+
+function BlackStone:init(x,y,diam)
+    -- you can accept and set parameters here
+    self:settings(x,y,diam,darkGrayColor,blackColor)
+    --[[
+    self:settings(x,y,diam)
+    self.insideColor=darkGrayColor
+    self.outsideColor=blackColor
+    self:makeMesh()
+    ]]
+end
+
+
+
+--# Colors
+-- Colors
+-- Make available the predefined colors from UIColor
+
+blackColor = color(0, 0, 0)
+
+darkslategrayColor = color(47, 79, 79)
+slategrayColor = color(107, 139, 139)
+lightslategrayColor	= color(127,159,159)
+ lightestslategrayColor	= color(192,219,219)	
+
+lightestslateblueColor = color(213, 194,255)
+lightslateblueColor = color(173, 154,255)
+mediumslateblueColor =	color(123,104,238)
+slateblueColor = 	color(106,90,205)
+darkslateblueColor =	color(72,61,139)
+
+
+
+
+transparentColor = color(0,0,0,0)
+cyanClearColor = color(0, 255, 255,128)
+whiteClearColor = color(255, 255, 255,64)
+bobgrayColor = 
+color(140, 145, 150)
+navajowhiteColor	= color(255,222,173)
+wheatColor	= color(245,222,179)
+burlywoodColor	= color(222,184,135)
+tanColor	 = color(210,180,140)
+
+
+rosybrownColor = 	color(188,143,143)
+sandybrownColor =	color(244,164,96)
+goldenrodColor =	color(218,165,32)
+brownColor = color(153, 102, 51)
+saddlebrownColor = color(139,69,19)
+siennaColor = color(160,82,45)
+
+
+
+darkGrayColor = color(85, 85, 85)
+lightGrayColor = color(170, 170, 170)
+lightlightGrayColor = color(220, 220, 220)
+lightestGrayColor = color(235, 235, 235)
+grayColor = color(128, 128, 128)
+
+disabledColor = color(128, 128, 128,200)
+selectedColor = color(170, 170, 170, 128)
+
+
+-- 235, 235, 235
+whiteColor = color(255, 255, 255)
+ivoryColor = color(255,255,240)
+agedIvoryColor = color(230,230,180)
+antiquewhiteColor =  color(250,235,215)
+linenColor = color(250,240, 230)
+
+redColor = color(255, 0, 0) 
+redClearColor = color(255, 0, 0, 96) 
+greenColor = color(0, 255, 0)
+blueColor = color(0, 0, 255)
+royalblueColor	= color(65,105,225)
+cyanColor = color(0, 255, 255)
+yellowColor = color(255, 255, 0)
+magentaColor = color(255, 0, 255)
+orangeColor = color(255, 128, 0)
+purpleColor = color(128, 0, 128)
+
+lightyellowColor = color(255,255,224)
+
+ 	powderblueColor = color(176,224,230)
+ 	lightblueColor =	color(173,216,230)
+ 	lightskyblueColor = color(135,206,250)
+ 	skyblueColor = color(135,206,235)
+ 	deepskyblueColor = color(0,191,255)
+
+--[[
+ 	deepskyblue	#00BFFF	rgb(0,191,255)
+ 	lightsteelblue	#B0C4DE	rgb(176,196,222)
+ 	dodgerblue	#1E90FF	rgb(30,144,255)
+ 	cornflowerblue	#6495ED	rgb(100,149,237)
+ 	steelblue	#4682B4	rgb(70,130,180)
+ 	royalblue	#4169E1	rgb(65,105,225)
+ 	blue	#0000FF	rgb(0,0,255)
+ 	mediumblue	#0000CD	rgb(0,0,205)
+ 	darkblue	#00008B	rgb(0,0,139)
+ 	navy	#000080	rgb(0,0,128)
+ 	midnightblue	#191970	rgb(25,25,112)
+ 	mediumslateblue	#7B68EE	rgb(123,104,238)
+ 	slateblue	#6A5ACD	rgb(106,90,205)
+ 	darkslateblue	#483D8B	rgb(72,61,139)
+
+  ]]
+
+clearColor = color(0, 0, 0, 0)
+lightTextColor = color(255, 255, 255, 153)
+darkTextColor = color(0, 0, 0)
+indigoColor = color(75,0,130)
+violetColor = color(238,130,238)
+
+-- mesh button colors are translucent
+rosybrownMeshColor = 	color(188,143,143,32)
+sandybrownMeshColor =	color(244,164,96,96)
+goldenrodMeshColor =	color(218,165,32,96)
+brownMeshColor = color(153, 102, 51,128)
+
+--[[
+tanMeshColor	 = color(210,180,140,196)
+antiquewhiteMeshColor =  color(250,235,215,72)
+whiteMeshColor = color(255, 255, 255,220)
+ivoryMeshColor = color(255,255,240,196)
+linenMeshColor = color(250,240, 230,148)
+  ]]
+tanMeshColor	 = tanColor
+antiquewhiteMeshColor =  antiquewhiteColor
+whiteMeshColor = whiteColor
+ivoryMeshColor = ivoryColor
+linenMeshColor = linenColor
+navajowhiteMeshColor	= navajowhiteColor
+wheatMeshColor	= wheatColor
+burlywoodMeshColor	= burlywoodColor
+
+darkslategrayMeshColor = darkslategrayColor 
+slategrayMeshColor = slategrayColor 
+lightslategrayMeshColor	= lightslategrayColor
+lightestslategrayMeshColor	= lightestslategrayColor	
+
+-- beads are translucent
+local beadAlpha=175
+local beadAlpha2=210
+lightyellowColor = color(255,255,224,beadAlpha2)
+whiteBeadColor = color(255, 255, 255, beadAlpha2)
+blueBeadColor = color(0, 0, 255, beadAlpha)
+yellowBeadColor = color(255, 255, 0, beadAlpha2)
+lightblueBeadColor =	color(173,216,230, beadAlpha)
+skyblueBeadColor = color(135,206,235,beadAlpha)
+deepskyblueBeadColor = color(0,191,255,beadAlpha)
+
+--# SwitchToggleControl
+SwitchToggleControl = class()
+
+function SwitchToggleControl:init(x,y,switchOn)
+    -- you can accept and set parameters here
+    --[[
+    s=string.format("x=%d  y:",x)
+    print(s)
+      ]]
+    print(y)
+    self.x = x
+    self.y = y
+    self.w=59
+    self.h=30
+    self.switchOn = switchOn or false
+    self.switchOnIcon = "Documents:switch_on_icon"
+    self.switchOffIcon = "Documents:switch_off_icon"
+    self.onChange = nil
+end
+
+function SwitchToggleControl:draw()
+    -- Codea does not automatically call this method
+    pushStyle()
+    textMode(CORNER)
+    if self.switchOn then
+        sprite(self.switchOnIcon,self.x,self.y,self.w,self.h)
+    else
+        sprite(self.switchOffIcon,self.x,self.y,self.w,self.h)
+    end
+    popStyle()
+end
+
+function SwitchToggleControl:touched(touch)
+    -- Codea does not automatically call this method
+    if touch.state == ENDED then
+        if pointInRect(touch.x, touch.y, self.x-5, self.y-5, self.w+10, self.h+10) then
+            if self.switchOn then
+                self.switchOn=false
+                print("switch is off")
+            else
+                self.switchOn=true
+                print("switch is on")
+            end  
+            if self.onChange then
+                self.onChange(self.switchOn)
+            end
+            return true -- switch changed
+        end    
+    end
+    return false -- switch did not change
+end
+
+
+    
+
+
+
+
+
+
+    
+
+--# RoundRect
+function roundRect(x,y,w,h,r)
+    pushStyle()
+    
+    insetPos = vec2(x+r,y+r)
+    insetSize = vec2(w-2*r,h-2*r)
+    
+    --Copy fill into stroke
+    local red,green,blue,a = fill()
+    stroke(red,green,blue,a)
+    
+    noSmooth()
+    rectMode(CORNER)
+    rect(insetPos.x,insetPos.y,insetSize.x,insetSize.y)
+    
+    if r > 0 then
+        smooth()
+        lineCapMode(ROUND)
+        strokeWidth(r*2)
+
+        line(insetPos.x, insetPos.y, 
+             insetPos.x + insetSize.x, insetPos.y)
+        line(insetPos.x, insetPos.y,
+             insetPos.x, insetPos.y + insetSize.y)
+        line(insetPos.x, insetPos.y + insetSize.y,
+             insetPos.x + insetSize.x, insetPos.y + insetSize.y)
+        line(insetPos.x + insetSize.x, insetPos.y,
+             insetPos.x + insetSize.x, insetPos.y + insetSize.y)            
+    end
+    popStyle()
+end
+--# ImageButton
+--[[
+ImageButton = class()
+
+function ImageButton:init(x)
+    -- you can accept and set parameters here
+    self.x = x
+end
+
+function ImageButton:draw()
+    -- Codea does not automatically call this method
+end
+
+function ImageButton:touched(touch)
+    -- Codea does not automatically call this method
+end
+
+  ]]
+
+ImageButton = class()
+
+function ImageButton:init(btnNorm,btnSel,x,y)
+    self.pos = vec2(x,y)
+    self.btnNorm = btnNorm
+    self.btnSel = btnSel
+    self.disabled = false
+    self.selected = false
+    self.action = nil
+    self.w,self.h = spriteSize(self.btnNorm)
+    self.w = self.w
+    self.actionOnBegan=false
+
+    self.size = vec2(self.w, self.h)
+    
+end
+
+function ImageButton:draw()
+    if self.selected == true then
+        sprite(self.btnSel,self.pos.x,self.pos.y,self.w,self.h)
+    elseif self.selected == false then
+        sprite(self.btnNorm,self.pos.x,self.pos.y,self.w,self.h)
+    end
+end
+
+function ImageButton:hit(p)
+    local l = self.pos.x - self.size.x/2
+    local r = self.pos.x + self.size.x/2
+    local t = self.pos.y + self.size.y/2
+    local b = self.pos.y - self.size.y/2
+    if p.x > l and p.x < r and
+       p.y > b and p.y < t then
+        -- print("button was hit")
+        return true
+    end
+    -- print("button not hit")
+    return false
+end
+
+function ImageButton:touched(touch)
+    -- Codea does not automatically call this method
+    -- print("Button:touched. displayName:"..self.displayName)
+    if touch.state == BEGAN or touch.state == MOVING then
+       if          self:hit(vec2(touch.x,touch.y)) 
+        and self.actionOnBegan
+        then
+        if self.action then
+            -- print("running button action")
+            self.action()
+            return true
+        end
+    end
+    elseif touch.state == ENDED and
+         self:hit(vec2(touch.x,touch.y)) then
+        
+        if self.action then
+            -- print("running button action")
+            self.action()
+            return true
+        end
+    end
+end
+
+function ImageButton:xxtouched(touch)
+    if touch.state == BEGAN or touch.state == MOVING then
+        if math.abs(self.pos.x - touch.x) <= (self.w/2)
+        and math.abs(self.pos.y - touch.y) <= (self.h/2) then
+            self.selected = true
+        else
+            self.selected = false
+        end
+    elseif touch.state == ENDED then
+        if self.selected == true and self.action then
+            self.action()
+        end
+        self.selected = false
+    end
+end
+--# MeshButton
+MeshButton = class()
+
+--# Button
+
+
+-- Mesh Button Class courtesy of @Vega
+-- 26 May 2012
+--
+-- Modified: - Call Back Functionality added
+--           - pushStyle() & popStyle() added to draw()
+--           - tapped status added
+--           - pointInRect() function added
+--           - changed vec2 location to x and y (to reduce typing!)
+--
+-- Version 1.2 (21 July 2012)
+
+function MeshButton:init(text,x,y,width,height,key)
+    self.state = "normal"
+    self.text = text
+    self.key=key or nil
+    self.textColor = blackColor
+    self.disabledColor = grayColor
+    self.disabled = false
+    self.x = x
+    self.y = y
+    self.width = width
+    self.height = height
+    self.visible = true
+    self.fontSize = 24
+    self.font = "ArialRoundedMTBold"
+    --[[
+    self.color1 = color(255, 255, 255, 96)
+    self.color2 = color(128,128,128,32)
+    self.presscolor1 = linen(192, 224, 224, 128)
+    self.presscolor2 = color(96, 192, 224, 128)
+    ]]
+    self.color1 = ivoryMeshColor
+    self.color2 = lightestslategrayMeshColor
+    self.presscolor1 = lightestslategrayMeshColor
+    self.presscolor2 = darkslategrayMeshColor
+    
+    self.verts = self:createVerts(self.width, self.height)
+    self.myMesh = mesh()
+    self.myMesh.vertices = triangulate(self.verts)
+    self.vertColor = {}
+    self:recolor()
+    self.action = nil
+    self.tapped = false
+end
+
+function MeshButton:setColors(c1,c2,p1,p2)
+   self.color1 = c1
+   self.color2 = c2
+   self.presscolor1 = p1
+   self.presscolor2 = p2
+end
+
+function MeshButton:textOptions(fn, sz, col)
+   self.font = fn
+   self.fontSize = sz
+   self.textColor = col
+end
+
+function MeshButton:draw()
+    pushStyle()
+    if self.visible then
+        textMode(CENTER)
+        self:recolor()
+        pushMatrix()
+        translate(self.x,self.y)
+        self.myMesh:draw()
+        fill(self.textColor)
+        fontSize(self.fontSize)
+        font(self.font)
+        text(self.text, self.width/2,self.height/2)
+        self:drawLines(self.verts)
+        popMatrix()
+    end
+    popStyle()
+end
+
+function MeshButton:touched(touch)
+    if self.disabled then
+        return
+    end
+    self.tapped = false
+    if self.visible then
+        if pointInRect(touch.x, touch.y, self.x, self.y, self.width, self.height) then
+            if touch.state == BEGAN then
+                self.tapped = true
+                self.state = "pressing"
+            elseif touch.state == ENDED then
+                if self.state == "pressing" then
+                    self.state = "normal"
+                    self.tapped = true
+                end
+                if self.action then
+                    self.action()
+                end
+            end
+        else
+            self.state = "normal"
+        end
+    end
+end
+
+function MeshButton:createVerts(w,h)
+   local r
+   local v = {}
+   if w > 100 or h > 100 then
+       if w>=h then r = math.round(h/100) else r = math.round(w/100) end
+   else
+       r = 1
+   end
+   v[1] = vec2(w,6*r)
+   v[2] = vec2(w-r,4*r)
+   v[3] = vec2(w-2*r,2*r)
+   v[4] = vec2(w-4*r,r)
+   v[5] = vec2(w-6*r,0)
+   v[6] = vec2(6*r,0)
+   v[7] = vec2(4*r,r)
+   v[8] = vec2(2*r,2*r)
+   v[9] = vec2(r,4*r)
+   v[10] = vec2(0,6*r)
+   v[11] = vec2(0,h-6*r)
+   v[12] = vec2(r,h-4*r)
+   v[13] = vec2(2*r,h-2*r)
+   v[14] = vec2(4*r,h-r)
+   v[15] = vec2(6*r,h)
+   v[16] = vec2(w-6*r,h)
+   v[17] = vec2(w-4*r,h-r)
+   v[18] = vec2(w-2*r,h-2*r)
+   v[19] = vec2(w-r,h-4*r)
+   v[20] = vec2(w,h-6*r)
+   return v
+end
+
+
+    
+    
+
+function MeshButton:drawLines(v)
+   noSmooth()
+   strokeWidth(1)
+   stroke(0, 0, 0, 192)
+   for i=1, #v-1 do
+       line(v[i].x,v[i].y,v[i+1].x,v[i+1].y)
+   end
+   line(v[#v].x,v[#v].y,v[1].x,v[1].y)
+end
+
+function MeshButton:recolor()
+    local lt, dk
+    if self.disabled then
+        lt = self.disabledColor
+        dk = self.disabledColor
+        
+    elseif self.state == "normal" then
+        lt = self.color1
+        dk = self.color2
+    else
+        lt = self.presscolor1
+        dk = self.presscolor2
+    end
+    for i=1,3 * #self.verts - 6 do
+        if self.myMesh.vertices[i].y > self.height/2 then
+            self.vertColor[i] = lt
+        else
+            self.vertColor[i] = dk
+        end
+    end
+    self.myMesh.colors = self.vertColor
+end
+    
+    
+    
+    
+    
+    
+--# ScrollText
+--# ScrollText
+ScrollText = class()
+
+function ScrollText:init(text,x,y,w,h)
+    -- you can accept and set parameters here
+    self.x = x
+    self.y = y
+    self.w = w
+    self.h = h
+    self.text = text
+    self.scroll = 0
+    self.scrollSlide = 0
+    -- self.scrollSlide = 100
+    self.scrolling = false
+    self.font="Courier"
+    self.fontSixe=16
+    self.textAlign = LEFT
+    -- based on 16 fontsize for ziggurat log
+    self.pgSize=34
+    self.numLines = 0 
+    self:calculateNumLines()
+end
+
+function ScrollText:calculateNumLines()
+    print("self:calculateNumLines()")
+    -- count newlines
+    n=0
+    for nl in string.gmatch(self.text,"\n") do
+        n = n + 1
+    end
+    self.numLines = n
+    print("numLines: "..self.numLines)
+end
+
+function meh()
+    font("Courier-Bold")
+   fill(0,0,255)
+   fontSize(72)
+   textAlign(CENTER)
+end
+
+local function lines(str)
+   local t = {}
+   local function helper(line)
+      table.insert(t, line)
+      return ""
+   end
+   helper((str:gsub("(.-)\r?\n", helper)))
+   return t
+end
+
+function ScrollText:drawLines()
+    local prev = ""
+    local function helper(line)
+        local _,th = textSize(prev)
+        local _,ch = textSize(line)
+        text(line,self.x,self.y+self.h-th-ch)
+        prev = prev..line.."\n"
+        return ""
+    end
+    helper((self.text:gsub("(.-)\r?\n", helper)))
+end
+
+function ScrollText:draw()
+    -- Codea does not automatically call this method
+    pushStyle()
+    clip(self.x,self.y,self.w,self.h)
+    pushMatrix()
+    background(linenColor)
+    font(self.font)
+   fill(blackColor)
+   fontSize(self.fontSixe)
+   textAlign(self.textAlign)
+    translate(0,-self.scroll)
+    textWrapWidth(self.w)
+    textMode(CORNER)
+    self:drawLines()
+    popMatrix()
+    clip()
+    local _,th = textSize(self.text)
+    popStyle()
+
+    self.scroll = self.scroll - self.scrollSlide
+    self.scrollSlide = self.scrollSlide * 0.95 
+    min = self.h-th
+    max = 0
+    if th < self.h then
+        min = 0
+    end
+
+    if not self.scrolling then
+        if self.scroll < min then
+            self.scroll = self.scroll + ( min - self.scroll ) / 10
+        elseif self.scroll > max then
+            self.scroll = self.scroll + ( max - self.scroll ) / 10
+        end
+    else
+        if self.scroll < min then
+            self.scrollSlide = self.scrollSlide / (100*(min - self.scroll))
+        elseif self.scroll > max then
+            self.scrollSlide = self.scrollSlide / (100*(max - self.scroll))
+        end
+    end
+end
+
+local function inBounds(px,py,x,y,w,h)
+    return px > x and py > y and px < x + w and py < y + h
+end
+
+function ScrollText:touched(touch)
+    if inBounds(touch.x,touch.y,self.x,self.y,self.w,self.h) then
+        -- self.scrollSlide = (self.scrollSlide + touch.deltaY)/2
+        
+        self.scrollSlide = (self.scrollSlide + touch.deltaY)/2
+        
+        if touch.state == MOVING then
+            self.scrolling = true
+        else self.
+            scrolling = false
+        end
+    end
+end
+--# Main
+-- Scrolling Text
+ 
+function ScrollText:pgUp()
+    -- alert("ScrollText:pgUp")
+    self.scrolling = true
+    self.scroll = self.scroll + self.pgSize *self.fontSixe
+end
+function ScrollText:pgDn()
+    -- alert("ScrollText:pgDn")
+    self.scrolling = true
+    self.scroll = self.scroll - self.pgSize*self.fontSixe
+end
+
+
+function ScrollText:gotoTop()
+    print("ScrollText:gotoTop()")
+    local textStr = self.text
+    local numLines = self.numLines
+    local x = self.x
+    local y = self.y
+    local x = self.x
+    local w = self.w
+    local h = self.h
+    self:init(textStr,x,y,w,h)
+    self.numLines = numLines
+    --[[
+    self.scrolling = true
+    local  rem = self.numLines % 34
+    topPt = self.numLines - rem
+    self.s = true
+    self.scroll = self.scroll + topPt*self.fontSixe
+      ]]
+end
+
+function ScrollText:gotoEnd()
+    print("ScrollText:gotoTEnd()")
+    -- gotoTop reinits scroll
+    self:gotoTop()
+    self.scrolling = true
+    local  rem = self.numLines % 34
+    -- endPt = self.numLines - rem
+    endPt = self.numLines - 34
+    self.scroll = self.scroll - endPt*self.fontSixe
+end
+  
+
+-- Use this function to perform your initial setup
+function xxxxsetup()
+    print("Hello Text!")
+    tc = [[Codea for iPad lets you create games and simulations — or just about any visual idea you have. Turn your thoughts into interactive creations that make use of iPad features like Multi-Touch and the accelerometer. We think Codea is the most beautiful code editor you'll use, and it's easy. 
+
+Codea is designed to let you touch your code. Want to change a color? Just tap and drag it. How about an image or a sound? Tapping will bring up visual editors that let you choose exactly what you want.
+
+Codea is built on the Lua programming language. A simple, elegant language that doesn't rely too much on symbols — a perfect match for iPad.
+
+Lua is a powerful, efficient, lightweight, embeddable scripting language. It supports procedural programming, object-oriented programming, functional programming, data-driven programming, and data description.
+
+Lua combines simple procedural syntax with powerful data description constructs based on associative arrays and extensible semantics. Lua is dynamically typed, runs by interpreting bytecode with a register-based virtual machine, and has automatic memory management with incremental garbage collection, making it ideal for configuration, scripting, and rapid prototyping.
+
+
+Lua has been used in many industrial applications (e.g., Adobe's Photoshop Lightroom), with an emphasis on embedded systems (e.g., the Ginga middleware for digital TV in Brazil) and games (e.g., World of Warcraft and Angry Birds). Lua is currently the leading scripting language in games. Lua has a solid reference manual and there are several books about it. Several versions of Lua have been released and used in real applications since its creation in 1993. Lua featured in HOPL III, the Third ACM SIGPLAN History of Programming Languages Conference, in 2007. Lua won the Front Line Award 2011 from the Game Developers Magazine.]]
+    ts = ScrollText(tc,WIDTH/8,HEIGHT/8,WIDTH*3/4,HEIGHT*3/4)
+    parameter.integer("TextLength",1,#tc,1221,function(v)
+        ts.text = tc:sub(1,v)
+    end)
+end
+
+-- This function gets called once every frame
+function xxxxxdraw()
+    -- This sets a dark background color 
+    background(40, 40, 50)
+
+    -- This sets the line thickness
+    strokeWidth(5)
+    fill(255)
+    -- Do your drawing here
+    fontSize(30)
+    ts:draw()
+end
+
+
+
+--# RadioButton
+RadioButton = class()
+
+
+function RadioButton:init(displayName)
+    -- you can accept and set parameters here
+    textAlign(LEFT)
+    self.displayName = displayName
+    
+    self.pos = vec2(0,0)
+    self.size = vec2(0,0)
+    self.action = nil
+    self.color = transparentColor
+    -- self.color=redColor
+    self.pressedColor = lightlightGrayColor
+    self.disabledColor = grayColor
+    self.disabled = false
+    self.pressed = false
+    self.minWidth = 120
+    self.fontColor = darkGrayColor
+    self.font = "HELVETICA-BOLD"
+    self.fontSize = 18
+    self.uncheckedRBIcon = "Documents:radio_button_unchecked"
+    self.checkedRBIcon = "Documents:radio_button_checked"
+    self.checked = false
+    
+    
+end
+
+function RadioButton:draw()
+    -- Codea does not automatically call this method 
+    pushStyle()
+    
+    
+    --[[
+    if self.disabled then
+        fill(self.disabledColor)
+    elseif self.pressed then
+        fill(self.pressedColor)
+    else
+        fill(self.color)
+    end
+      ]]
+    -- font("ArialRoundedMTBold")
+    -- fsontSize(14)
+    fill(self.color)
+    -- use longest sound name for size
+    font(self.font)
+    fontSize(self.fontSize)
+    local w,h = textSize(self.displayName)
+    w = w + 20
+    h = h + 10
+    
+    if w < self.minWidth then
+        w = self.minWidth
+    end
+     
+    roundRect(self.pos.x - w/2,
+              self.pos.y - h/2,
+              w,h,8)
+            
+    self.size = vec2(w,h)
+
+    textMode(CORNER)
+
+    -- fill(54, 65, 96, 255)
+    -- fill(darkGrayColor)
+    -- text(self.displayName,self.pos.x+2,self.pos.y-2)
+    -- fill(255, 255, 255, 255)
+    
+    rbIcon = self.uncheckedRBIcon
+    if self.checked then
+        rbIcon = self.checkedRBIcon
+    end
+    sprite(rbIcon, self.pos.x -45,self.pos.y, 24)
+    
+    font(self.font)
+    fontSize(self.fontSize)
+    fill(self.fontColor)
+    
+    -- fontSize(36)
+    text(self.displayName,self.pos.x - 30,self.pos.y -  10)
+    
+    popStyle()
+end
+
+function RadioButton:hit(p)
+    local l = self.pos.x - self.size.x/2
+    local r = self.pos.x + self.size.x/2
+    local t = self.pos.y + self.size.y/2
+    local b = self.pos.y - self.size.y/2
+    if p.x > l and p.x < r and
+       p.y > b and p.y < t then
+        print("radio button was hit")
+        return true
+    end
+    -- print("button not hit")
+    return false
+end
+
+function RadioButton:touched(touch)
+    -- Codea does not automatically call this method
+    -- print("Button:touched. displayName:"..self.displayName)
+    if self.disabled then
+        return
+    end
+    if self:hit(vec2(touch.x,touch.y)) then
+        if touch.state == BEGAN 
+        -- or touch.steate == MOVING 
+            then
+            self.pressed = true
+        else
+            self.pressed = false
+        end
+        if touch.state == ENDED then
+            -- always check or keep ñhh
+             self.checked = true
+            return true
+            --[[
+            if self.action then
+                print("running button action")
+                self.action()
+                return true
+            end
+            self.pressed = false
+              ]]
+            
+        end 
+    end
+end
+
+--# TextBox
+--# TextBox
+TextBox = class()
+
+-- TextBox
+-- ver. 1.0
+-- a control for basic string editing
+-- ====================
+--
+-- This class is courtesy of the Spritely example App
+-- included with Codea.
+
+function TextBox:init(x, y, w, s)
+    self.x = x
+    self.y = y
+    self.w = w
+    self.text = s
+    self.blink = ElapsedTime
+    self.blinkstate = true
+    self.acceptInput = false
+    self.limit=100
+end
+
+function TextBox:draw()
+   local x, w, h
+   pushStyle()
+   pushMatrix()
+    
+   font("HelveticaNeue-Bold")
+   textMode(CENTER)
+   fontSize(18)
+   rectMode(CORNER)
+   strokeWidth(1)
+   stroke(0, 0, 0, 255)
+   fill(228, 228, 228, 255)
+   translate(self.x, self.y)
+   rect(0, 0, self.w, 24)
+   stroke(255, 255, 255, 255)
+   --noFill()
+   rect(2, 2, self.w - 4, 20)
+   fill(22, 22, 22, 255)
+   text(self.text, self.w / 2, 12)
+   w, h = textSize(self.text)
+    if self.acceptInput then
+        if self.blink < ElapsedTime - 0.3 then
+            self.blink = ElapsedTime
+            self.blinkstate = not self.blinkstate
+        end
+        if self.blinkstate then
+            strokeWidth(2)
+            stroke(45, 45, 45, 255)
+            
+            x = self.w / 2 + w / 2 + 2
+            line(x, 3, x, 21)
+        end
+    end
+   popMatrix()
+   popStyle()
+end
+ 
+function TextBox:hit(p)
+    -- print(p.x)
+    -- print(p.y)
+    -- local l = self.x- self.w/2
+    -- local r = self.x + self.w/2
+    local l  = self.x
+    local r = self.x + self.w
+    local t = self.y + 24/2
+    local b = self.y - 24/2
+    -- print("l="..l)
+    -- print("r="..r)
+    -- print("t="..t)
+    -- print("b="..b)
+    if p.x > l and p.x < r and
+       p.y > b and p.y < t then
+        print("textbox was hit")
+        return true
+    end
+    -- print("button not hit")
+    return false
+end
+
+
+function TextBox:touched(touch)
+
+    -- if isKeyboardShowing() then
+    
+    
+   -- caller should show keyboard
+    if touch.state == ENDED and
+        self:hit(touch) then
+        return true
+    end
+    
+end
+
+function TextBox:acceptKey(k)
+   if k ~= nil and self.acceptInput then
+       if string.byte(k) == nil then
+           if string.len(self.text) > 0 then
+               self.text = string.sub(self.text,
+               1, string.len(self.text) - 1)
+           end
+       end
+       self.text = self.text..k
+        -- apply limit
+        if string.len(self.text) > self.limit then
+            self.text = string.sub(self.text, 1, self.limit)
+        end
+   end
+end
+--# Utilities
+Utilities = class()
+
+function Utilities:init(x)
+    -- you can accept and set parameters here
+    self.x = x
+end
+
+function Utilities:draw()
+    -- Codea does not automatically call this method
+end
+
+function Utilities:touched(touch)
+    -- Codea does not automatically call this method
+end
+
+-- example for a milliseconds delay:
+
+function Utilities:delay(msec)
+    if msec>0 then
+        local start=os.clock()
+        local stop=start+msec/1000
+        while os.clock()<stop do end
+    end
+end
+
+function math.round(num)
+-- There is no math.round in Codea currently.
+
+    return math.floor(num + 0.5)
+end
+
+
+-- string.format(fmt, unpack(arg)))
+function printFmt(...)
+    -- table.remove(arg)
+    print(arg)
+    str = string.format(fmt, unpack(arg))
+    print(str)
+end
+
+--# Collisions
+-- Collision Detection Functions
+
+function math.hypot(x, y)
+
+   -- math.hypot function used to calculate the hypotenuse of a right angle triangle
+   -- from (0, 0) to (x, y).
+   --
+   -- Can be used to get the angle (in radians) for the polar co-ordinates at
+   -- cartesian co-ordinates (x, y)
+   --
+   -- Warning - may underflow or overflow for very large or very small values of x and y.
+   --         - see math.hypot2() if this is an issue.
+   --
+   -- Reefwing Software (www.reefwing.com.au)
+   -- Version 1.0
+
+   return math.sqrt(math.pow(x, 2) + math.pow(y, 2))
+
+end
+
+function pointInCircle(pointX, pointY, centreX, centreY, radius)
+
+   -- Returns true if point (pointX, pointY) is within the circle
+   -- centred at (centreX, centreY) with the provided radius.
+   --
+   -- Reefwing Software (www.reefwing.com.au)
+   -- Version 1.0
+
+   local dx, dy = pointX - centreX, pointY - centreY
+   local h = math.hypot(dx, dy)
+
+   return (h < radius)
+
+end
+
+function pointInRect(pointX, pointY, x, y, w, h)
+
+   -- Returns true if point (pointX, pointY) is within the rectangle
+   -- with lower left corner at (x, y) with a width of w and a
+   -- height of h.
+   --
+   -- Reefwing Software (www.reefwing.com.au)
+   -- Version 1.0
+
+   if pointX >= x and pointX <= x + w and pointY >= y and pointY <= y + h then
+       return true
+   else
+       return false
+   end
+
+end
+
+textBoxAcceptingInput=nil
+function keyboard(key)
+   if  key ~= nil and textBoxAcceptingInput ~= nil then
+           textBoxAcceptingInput:acceptKey(key)    
+   end
+end
+
+
+--# LoHiPair
+LoHiPair = class()
+
+function LoHiPair:init(lo, hi)
+    -- you can accept and set parameters here
+    self.lo = lo
+    self.hi = hi
+end
+
+
+
+-- this a utility class so should get called for draw or touched
+function LoHiPair:draw()
+    -- Codea does not automatically call this method
+end
+
+function LoHiPair:touched(touch)
+    -- Codea does not automatically call this method
+end
+
+--# Circle 
+-- This is our basic tweenable object, it has the following properties:
+--
+-- x, y - the x and y position
+-- size - the diameter
+-- originalState - the original values, so we can reset the object
+
+Circle = class()
+
+function Circle:init(x, y, size)
+     -- you can accept and set parameters here
+    self.x = x
+    self.y = y
+    self.size = size
+    
+    self.originalState = { x = self.x, 
+                           y = self.y, 
+                           size = self.size }
+    
+end
+
+
+--[[
+function Circle:reset()
+    self.x = self.originalState.x
+    self.y = self.originalState.y
+    self.size = self.originalState.size
+    self.x = self.originalState.co
+end
+  ]]
+
+function Circle:draw()
+    pushStyle()
+    
+    -- fill(self.c)
+    
+    ellipse(self.x, self.y, self.size)
+    
+    popStyle()
+end
+
+
+--# BlueBead
+BlueBead = class(MeshCircle)
+
+function BlueBead:init(x, y, diam)
+    -- you can accept and set parameters here
+    self:settings(x,y,diam,deepskyblueBeadColor,blueBeadColor)
+end
+
+
+
+
+
+
+
+--# YellowBead
+YellowBead = class(MeshCircle)
+
+function YellowBead:init(x, y, diam)
+    -- you can accept and set parameters here
+    self:settings(x,y,diam,whiteBeadColor,yellowBeadColor)
+end
+
+
+
+
+
+
+
+--# HexContainer
+HexContainer = class()
+
+function HexContainer:init(x,y,len, c, pieceType)
+    -- you can accept and set parameters here
+    self.x = x
+    self.y = y
+    self.len = len
+    self.c = c
+    self.pieceType = pieceType
+    self.hexagon = Hexagon(x,y,len,c)
+    self.action = nil
+    
+    local sqrt3=math.sqrt(3)
+    self.circleColor1=darkGrayColor
+    self.circleColor2=darkGrayColor
+    local circX=x-len/8
+    local circY=y+len*sqrt3/8
+    local circRadius=len*1.25
+    self.innerCircle = MeshCircle(circX,circY,circRadius,self.circleColor1,self.circleColor2)
+    self.innerCircle.hasBorder=false
+    local pClass = BlackStone
+    if pieceType == 2 then
+        pClass = BlackStone
+    elseif pieceType == 3 then
+        pClass = WhiteStone
+    elseif pieceType == BP_STATE_BLUEBEAD then
+        pClass = BlueBead
+    elseif pieceType == BP_STATE_YELLOWBEAD then
+        pClass = YellowBead
+    end
+    self.pieceTable={}
+    local t=self.pieceTable
+    local xOffset=len/3
+    local yOffset=len/3
+    local d=len/2
+    circX = circX + len/2.5
+    circY = circY + len/2.5
+    t[1]= pClass(circX,circY,d)
+    t[2]= pClass(circX+xOffset,circY,d)
+    t[3]= pClass(circX + xOffset/2,circY+yOffset,d)
+    t[4]= pClass(circX-xOffset/2,circY+yOffset,d)
+    t[5]= pClass(circX-xOffset-5,circY,d)
+    t[6]= pClass(circX + xOffset/2,circY-yOffset,d)
+    t[7]= pClass(circX-xOffset/2,circY-yOffset,d)
+end
+
+function HexContainer:draw()
+    -- Codea does not automatically call this method
+    self.hexagon:draw()
+    self.innerCircle:draw()
+    local t=self.pieceTable
+    for i=1,#t do
+        local p =t[i]
+        p:draw()
+    end
+end
+
+function HexContainer:touched(touch)
+    -- Codea does not automatically call this method
+    local sqrt3=math.sqrt(3)
+    local len = self.len
+    local x = self.x
+    local y=self.y
+    local circX=x-len/8
+    local circY=y+len*sqrt3/8
+    local circRadius=len*1.5
+    local circX=x+len/2
+    local circY=y+len*sqrt3/4
+    local circRadius=len*1.1
+    
+    if pointInCircle(touch.x, touch.y, circX, circY, circRadius)
+    and touch.state == BEGAN then
+        print("hexcontainer touched")
+        if self.action then
+            self.action()
+        end
+        return true
+    end
+end
